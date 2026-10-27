@@ -1,0 +1,26 @@
+---
+/** Hueco dibujado a lápiz para una herramienta futura. */
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'div'>;
+
+const { class: className, ...attrs } = Astro.props;
+---
+
+<div class:list={['sketch', className]} {...attrs}>
+    <span><slot /></span>
+</div>
+
+<style>
+    .sketch {
+        min-height: 270px; display: grid; place-items: center; padding: 1.5rem; text-align: center;
+        border: 3px dashed rgb(var(--fg-rgb) / .7);
+        background:
+            linear-gradient(to top right, transparent calc(50% - 1px), rgb(var(--fg-rgb) / .35) 50%, transparent calc(50% + 1px)),
+            linear-gradient(to bottom right, transparent calc(50% - 1px), rgb(var(--fg-rgb) / .35) 50%, transparent calc(50% + 1px));
+    }
+    .sketch span {
+        background: var(--bg); box-shadow: 0 0 0 8px var(--bg); transform: rotate(-2deg);
+        font-family: var(--hand); font-size: 1.6rem; font-weight: 700; line-height: 1.1; color: rgb(var(--fg-rgb));
+    }
+</style>

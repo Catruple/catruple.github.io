@@ -1,0 +1,21 @@
+---
+/** Lista de opciones tipo radio dibujada. La última opción queda "a medio hacer". */
+interface Props {
+  options: string[];
+  selected?: string;
+}
+
+const { options, selected } = Astro.props;
+---
+
+<ul class="radios">
+    {options.map((option) => <li class:list={{ on: option === selected }}>{option}</li>)}
+</ul>
+
+<style>
+    .radios { margin: 0; padding: 0; list-style: none; font-size: 36px; }
+    li { height: 84px; display: flex; align-items: center; gap: 28px; padding: 0 34px; border-bottom: 5px solid currentColor; }
+    li::before { content: ""; width: 34px; height: 34px; border: 6px solid currentColor; border-radius: 50%; }
+    .on::before { background: radial-gradient(currentColor 0 38%, transparent 42%); }
+    li:last-child { border-bottom: 0; border-top: 5px dashed currentColor; }
+</style>

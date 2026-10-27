@@ -1,0 +1,27 @@
+---
+/** Cota de plano (línea con topes y medida). */
+import { place, type Box } from '@/lib/placement';
+
+interface Props {
+  orientation: 'h' | 'v';
+  label: string;
+  box: Box;
+}
+
+const { orientation, label, box } = Astro.props;
+---
+
+<div class:list={['dim', orientation]} style={place(box)}><span>{label}</span></div>
+
+<style>
+    .dim { display: flex; align-items: center; gap: 20px; font-size: 28px; letter-spacing: .1em; white-space: nowrap; }
+
+    .h::before, .h::after { content: ""; flex: 1; height: 30px; background: linear-gradient(currentColor, currentColor) 0 50% / 100% 3px no-repeat; }
+    .h::before { border-left: 3px solid currentColor; }
+    .h::after { border-right: 3px solid currentColor; }
+
+    .v { writing-mode: vertical-rl; }
+    .v::before, .v::after { content: ""; flex: 1; width: 30px; background: linear-gradient(currentColor, currentColor) 50% 0 / 3px 100% no-repeat; }
+    .v::before { border-top: 3px solid currentColor; }
+    .v::after { border-bottom: 3px solid currentColor; }
+</style>

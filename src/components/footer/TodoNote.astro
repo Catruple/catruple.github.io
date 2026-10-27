@@ -1,0 +1,46 @@
+---
+/** Nota adhesiva con la lista de pendientes. */
+interface Props {
+  title: string;
+  items: { text: string; done?: boolean; aside?: string }[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<div class="note">
+    <h4>{title}</h4>
+    <ul>
+        {
+            items.map((item) => (
+                <li class:list={{ done: item.done }}>
+                    {item.text}
+                    {item.aside && <small>{item.aside}</small>}
+                </li>
+            ))
+        }
+    </ul>
+</div>
+
+<style>
+    .note {
+        position: relative; padding: 1.3rem 1.4rem 1.2rem; transform: rotate(-1.6deg);
+        background-color: var(--paper); color: #1a2a6c;
+        background-image: repeating-linear-gradient(transparent 0 28px, rgb(30 70 200 / .22) 28px 29px);
+        box-shadow: 6px 6px 0 rgb(0 0 0 / .35);
+        font-family: var(--hand); font-size: 1.45rem; line-height: 29px;
+    }
+    /* cinta adhesiva */
+    .note::before {
+        content: ""; position: absolute; top: -14px; left: 50%; width: 80px; height: 24px;
+        transform: translateX(-50%) rotate(2deg);
+        background: rgb(255 210 63 / .75); border: 1px dashed rgb(0 0 0 / .25);
+    }
+    h4 { margin: 0 0 .2rem; font-size: 1.8rem; line-height: 36px; font-weight: 700; text-decoration: underline wavy #e8454f; text-underline-offset: 6px; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    li { display: flex; align-items: center; gap: .55rem; }
+    li::before { content: ""; flex: none; width: .8em; height: .8em; border: 2px solid currentColor; }
+    .done { text-decoration: line-through; opacity: .75; }
+    .done::before { content: "✓"; display: grid; place-items: center; font-size: .75em; line-height: 1; }
+    small { font-size: .8em; opacity: .75; }
+</style>

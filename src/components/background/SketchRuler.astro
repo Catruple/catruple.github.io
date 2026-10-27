@@ -1,0 +1,22 @@
+---
+/** Regla horizontal con marcas numeradas. */
+interface Props {
+  marks: string[];
+}
+
+const { marks } = Astro.props;
+---
+
+<div class="ruler">
+    {marks.map((mark, i) => <span style={`left:${6 + i * 20}%`}>{mark}</span>)}
+</div>
+
+<style>
+    .ruler {
+        position: relative; height: 90px; border-bottom: 5px solid currentColor;
+        background:
+            repeating-linear-gradient(90deg, currentColor 0 4px, transparent 4px 20px) left bottom / 100% 20px no-repeat,
+            repeating-linear-gradient(90deg, currentColor 0 5px, transparent 5px 100px) left bottom / 100% 46px no-repeat;
+    }
+    span { position: absolute; top: 6px; font-size: 34px; }
+</style>

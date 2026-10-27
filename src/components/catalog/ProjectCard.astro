@@ -1,0 +1,131 @@
+---
+/** Tarjeta de un proyecto del repositorio. */
+import Window from '@/components/ui/Window.astro';
+import PixelIcon from '@/components/ui/PixelIcon.astro';
+import Button from '@/components/ui/Button.astro';
+import { categoryLabel } from '@/data/categories';
+import { cardDomId, type Project } from '@/data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="card" id={cardDomId(project.id)} data-category={project.category}>
+    <Window class="card-win" title={project.windowTitle}>
+        <div class="body">
+            <div class="top">
+                <div class="ico"><PixelIcon name={project.icon} size={36} /></div>
+                <span class="badge">{categoryLabel(project.category).toUpperCase()}</span>
+            </div>
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+            {project.wip && <span class="stamp">WIP</span>}
+            <div class="foot">
+                <span>{project.meta}</span>
+                {
+                    project.url ? (
+                        <Button size="sm" href={project.url} target="_blank" rel="noopener">
+                            {project.cta}
+                        </Button>
+                    ) : (
+                        <Button size="sm" aria-haspopup="dialog" data-project-popup={project.id}>
+                            {project.cta}
+                        </Button>
+                    )
+                }
+            </div>
+        </div>
+    </Window>
+</article>
+
+<script>
+    import { openAlert, type AlertOptions } from '@/scripts/alert-dialog';
+    import { PROJECTS, type Project } from '@/data/projects';
+    import { SITE } from '@/config/site';
+
+    const projects: readonly Project[] = PROJECTS;
+
+    // Proyectos sin `url` en data/projects.ts: muestran su comando o un aviso.
+    const popupFor = (project: Project): AlertOptions =>
+        project.command
+            ? {
+                  title: project.title,
+                  message: project.command.intro,
+                  code: project.command.code,
+                  link: project.command.source,
+              }
+            : {
+                  title: 'Sin enlace todavía',
+                  message: `"${project.title}" aún no tiene enlace conectado. Mientras tanto puedes buscarlo en GitHub.`,
+                  link: { href: SITE.github, text: 'Ir a GitHub' },
+              };
+
+    document.querySelectorAll<HTMLButtonElement>('[data-project-popup]').forEach((button) =>
+        button.addEventListener('click', () => {
+            const project = projects.find((p) => p.id === button.dataset.projectPopup);
+            if (project) openAlert(popupFor(project));
+        }),
+    );
+</script>
+
+<style>
+    .card { position: relative; transition: transform .15s; }
+    .card:nth-child(3n+1) { transform: rotate(-.8deg); }
+    .card:nth-child(3n+2) { transform: rotate(.6deg); }
+    .card:nth-child(3n) { transform: rotate(-.3deg); }
+    .card:hover { transform: rotate(0) translate(-3px, -3px); }
+
+    /* cinta adhesiva */
+    .card::before {
+        content: ""; position: absolute; z-index: 3; top: -15px; left: 50%; width: 86px; height: 26px;
+        transform: translateX(-50%) rotate(-3deg);
+        background: rgb(255 255 255 / .5); border: 1px dashed rgb(255 255 255 / .8);
+    }
+
+    .card-win { height: 100%; display: flex; flex-direction: column; transition: box-shadow .15s; }
+    .card:hover .card-win { box-shadow: 11px 11px 0 var(--ink); }
+    .card.flash .card-win { animation: flash .45s steps(2) 4; }
+
+    .body {
+        position: relative; flex: 1; display: flex; flex-direction: column;
+        padding: 1.1rem 1.2rem 0; color: var(--ink);
+        background-color: var(--paper);
+        background-image: radial-gradient(rgb(var(--ink-rgb) / .1) 1.2px, transparent 1.5px);
+        background-size: 5px 5px;
+        transition: background-color .12s, color .12s;
+    }
+    .card:hover .body {
+        background-color: var(--ink); color: var(--paper);
+        background-image: radial-gradient(rgb(255 255 255 / .1) 1.2px, transparent 1.5px);
+    }
+
+    .top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .9rem; }
+    .ico {
+        width: 60px; height: 60px; display: grid; place-items: center;
+        background: var(--bg); color: rgb(var(--fg-rgb));
+        border: 3px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+    }
+    .card:hover .ico { box-shadow: 3px 3px 0 var(--paper); }
+    .badge { padding: .25rem .5rem; font-family: var(--silk); font-size: .62rem; letter-spacing: .1em; background: var(--ink); color: var(--paper); }
+    .card:hover .badge { background: var(--paper); color: var(--ink); }
+
+    h3 { margin: 0 0 .5rem; font-family: var(--px); font-weight: 700; font-size: 1.3rem; line-height: 1.1; text-transform: uppercase; }
+    p { margin: 0 0 1.2rem; flex: 1; font-size: 1rem; line-height: 1.4; }
+
+    .foot {
+        display: flex; justify-content: space-between; align-items: center; gap: .6rem;
+        margin-top: auto; padding: .8rem 0 1rem; border-top: 3px dashed currentColor;
+    }
+    .foot > span { font-family: var(--silk); font-size: .66rem; letter-spacing: .05em; text-transform: uppercase; }
+
+    .stamp {
+        position: absolute; right: 1rem; bottom: 4.6rem; padding: .1rem .55rem; transform: rotate(-12deg);
+        font-family: var(--silk); font-weight: 700; font-size: .95rem; letter-spacing: .1em;
+        color: var(--ink); background: var(--acc); border: 3px solid var(--ink);
+    }
+
+    @keyframes flash { 50% { outline: 6px solid var(--acc); outline-offset: 2px; } }
+</style>

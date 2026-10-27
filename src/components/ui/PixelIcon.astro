@@ -1,0 +1,22 @@
+---
+/** Ícono pixel-art renderizado como SVG en tiempo de compilación. */
+import { pixelSvg, type IconName } from '@/lib/pixel-icons';
+
+interface Props {
+  name: IconName;
+  /** Ancho en px (el alto es proporcional). */
+  size?: number;
+  class?: string;
+  style?: string;
+}
+
+const { name, size, class: className, style } = Astro.props;
+const inlineStyle = [size ? `width:${size}px` : '', style].filter(Boolean).join(';') || undefined;
+---
+
+<span class:list={['px', className]} style={inlineStyle} set:html={pixelSvg(name)} />
+
+<style>
+    .px { display: inline-block; line-height: 0; flex: none; }
+    .px :global(svg) { display: block; width: 100%; height: auto; }
+</style>

@@ -1,0 +1,48 @@
+---
+/** Cuadro de diálogo estilo Mac. Se abre desde cualquier script con openAlert(). */
+import Window from './Window.astro';
+import Button from './Button.astro';
+import PixelIcon from './PixelIcon.astro';
+---
+
+<Window
+    as="dialog"
+    class="alert"
+    title="Aviso"
+    titleId="alert-title"
+    closeLabel="Cerrar"
+    aria-labelledby="alert-title"
+    data-alert-dialog
+>
+    <div class="alert-body">
+        <PixelIcon name="alert" size={48} />
+        <p data-alert-message></p>
+    </div>
+    <div class="alert-code" data-alert-code hidden>
+        <pre><code data-alert-code-text></code></pre>
+        <Button size="sm" data-alert-copy>Copiar</Button>
+    </div>
+    <form method="dialog" class="alert-actions">
+        <Button size="sm" href="#" target="_blank" rel="noopener" hidden data-alert-link>GitHub</Button>
+        <Button size="sm" variant="primary" type="submit" autofocus>OK</Button>
+    </form>
+</Window>
+
+<script>
+    import { initAlertDialog } from '@/scripts/alert-dialog';
+    initAlertDialog();
+</script>
+
+<style>
+    .alert { width: min(92vw, 470px); margin: auto; padding: 0; }
+    .alert::backdrop { background: repeating-conic-gradient(rgb(0 0 0 / .5) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px; }
+    .alert-body { display: flex; gap: 1.1rem; align-items: flex-start; padding: 1.3rem 1.3rem .6rem; }
+    .alert-body p { margin: 0; font-size: 1.05rem; }
+    .alert-code { display: flex; align-items: center; gap: .7rem; margin: .4rem 1.3rem 0; }
+    .alert-code pre {
+        flex: 1; min-width: 0; margin: 0; padding: .55rem .8rem; overflow-x: auto;
+        background: var(--ink); color: var(--paper); border: 3px solid var(--ink); box-shadow: 3px 3px 0 var(--acc);
+        font-family: ui-monospace, Consolas, Menlo, monospace; font-size: .95rem; white-space: pre;
+    }
+    .alert-actions { display: flex; justify-content: flex-end; gap: .7rem; margin: 0; padding: .6rem 1.3rem 1.2rem; }
+</style>

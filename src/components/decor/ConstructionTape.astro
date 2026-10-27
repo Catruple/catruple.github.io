@@ -1,0 +1,44 @@
+---
+/** Cinta de obra con mensajes desplazándose en bucle. */
+interface Props {
+  messages: string[];
+}
+
+const { messages } = Astro.props;
+---
+
+<div class="tape" aria-hidden="true">
+    <div class="track">
+        {
+            [0, 1].map(() => (
+                <div class="group">
+                    {messages.map((m) => <span>▲ {m}</span>)}
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .tape {
+        position: relative; z-index: 2; left: -2vw; width: 104vw; overflow: hidden;
+        margin: 6rem 0 3.5rem; padding: 1.1rem 0;
+        background: var(--ink); transform: rotate(-1.2deg);
+    }
+    .tape::before, .tape::after {
+        content: ""; position: absolute; left: 0; right: 0; height: 8px;
+        background: repeating-linear-gradient(-45deg, var(--acc) 0 12px, var(--ink) 12px 24px);
+    }
+    .tape::before { top: 0; }
+    .tape::after { bottom: 0; }
+
+    /* dos copias iguales: al desplazarse -50% el bucle no tiene costura */
+    .track { display: flex; width: max-content; animation: slide 30s linear infinite; }
+    .group { display: flex; flex: none; }
+    span {
+        padding-right: 2.5rem; white-space: nowrap;
+        font-family: var(--silk); font-weight: 700; font-size: 1rem; letter-spacing: .14em; color: var(--acc);
+    }
+
+    @keyframes slide { to { transform: translateX(-50%); } }
+</style>

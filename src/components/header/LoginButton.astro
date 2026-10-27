@@ -1,0 +1,19 @@
+---
+/** Botón "Acceso" (todavía sin sistema de cuentas: avisa y manda a GitHub). */
+import Button from '@/components/ui/Button.astro';
+---
+
+<Button size="sm" data-login>Acceso</Button>
+
+<script>
+    import { openAlert } from '@/scripts/alert-dialog';
+    import { SITE } from '@/config/site';
+
+    document.querySelector('[data-login]')?.addEventListener('click', () =>
+        openAlert({
+            title: 'Acceso',
+            message: 'El acceso para miembros todavía está en construcción. Mientras tanto, todo está abierto en GitHub.',
+            link: { href: SITE.github, text: 'Ir a GitHub' },
+        }),
+    );
+</script>

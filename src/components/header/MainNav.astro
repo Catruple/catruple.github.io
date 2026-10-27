@@ -1,0 +1,43 @@
+---
+/** Menú principal: cada enlace filtra el repositorio por categoría. */
+import { NAV_ITEMS } from '@/data/categories';
+import { SECTION_IDS } from '@/config/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<nav class:list={['menu', className]} aria-label="Principal">
+    {NAV_ITEMS.map((item) => <a href={`#${SECTION_IDS.catalog}`} data-nav-filter={item.filter}>{item.label}</a>)}
+</nav>
+
+<script>
+    import { setFilter, subscribe } from '@/scripts/catalog-store';
+    import type { CategoryId } from '@/data/categories';
+
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-filter]')];
+
+    links.forEach((a) =>
+        a.addEventListener('click', () => setFilter(a.dataset.navFilter as CategoryId, true)),
+    );
+
+    subscribe(({ filter, fromNav }) => {
+        links.forEach((a) => {
+            if (fromNav && a.dataset.navFilter === filter) a.setAttribute('aria-current', 'true');
+            else a.removeAttribute('aria-current');
+        });
+    });
+</script>
+
+<style>
+    .menu { display: flex; gap: .2rem; }
+    .menu a {
+        padding: .25rem .75rem;
+        font-family: var(--px); font-weight: 700; font-size: .92rem; letter-spacing: .05em;
+        color: var(--ink); text-decoration: none; text-transform: uppercase;
+    }
+    .menu a:hover, .menu a[aria-current] { background: var(--ink); color: var(--paper); }
+</style>

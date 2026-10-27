@@ -1,0 +1,25 @@
+---
+/** Menú desplegable dibujado. Un ítem '---' es un separador. */
+import { place, type Box } from '@/lib/placement';
+
+interface Props {
+  items: string[];
+  selected?: string;
+  box: Box;
+}
+
+const { items, selected, box } = Astro.props;
+---
+
+<div class="menu" style={place(box)}>
+    {items.map((item) => (item === '---' ? <hr /> : <div class:list={{ sel: item === selected }}>{item}</div>))}
+    <div class="blank"></div>
+</div>
+
+<style>
+    .menu { border: 6px solid currentColor; box-shadow: 18px 18px 0 rgb(var(--fg-rgb) / .16); font-size: 36px; letter-spacing: .04em; }
+    .menu > div { height: 78px; display: flex; align-items: center; padding: 0 30px; }
+    .menu > .sel { background: currentColor; color: var(--bg); }
+    hr { margin: 8px 20px; border: 0; border-top: 5px dashed currentColor; }
+    .menu > .blank { height: 52px; margin: 10px 30px 22px; padding: 0; border: 5px dashed currentColor; }
+</style>

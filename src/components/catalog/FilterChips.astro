@@ -1,0 +1,41 @@
+---
+/** Chips de categoría para filtrar el repositorio. */
+import { ALL_CATEGORY, CATEGORIES } from '@/data/categories';
+---
+
+<div class="chips" role="group" aria-label="Filtrar por categoría">
+    {
+        CATEGORIES.map((c) => (
+            <button class="chip" aria-pressed={c.id === ALL_CATEGORY} data-chip-filter={c.id}>
+                {c.label}
+            </button>
+        ))
+    }
+</div>
+
+<script>
+    import { setFilter, subscribe } from '@/scripts/catalog-store';
+    import type { CategoryId } from '@/data/categories';
+
+    const chips = [...document.querySelectorAll<HTMLButtonElement>('[data-chip-filter]')];
+
+    chips.forEach((chip) =>
+        chip.addEventListener('click', () => setFilter(chip.dataset.chipFilter as CategoryId)),
+    );
+
+    subscribe(({ filter }) => {
+        chips.forEach((chip) => chip.setAttribute('aria-pressed', String(chip.dataset.chipFilter === filter)));
+    });
+</script>
+
+<style>
+    .chips { display: flex; flex-wrap: wrap; gap: .6rem; }
+    .chip {
+        padding: .35rem .8rem;
+        font-family: var(--silk); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase;
+        color: var(--ink); background: var(--paper);
+        border: 3px solid var(--ink); border-radius: 20px; box-shadow: 3px 3px 0 var(--ink);
+    }
+    .chip:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--ink); }
+    .chip[aria-pressed="true"] { background: var(--acc); transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
+</style>

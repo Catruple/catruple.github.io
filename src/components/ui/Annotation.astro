@@ -1,0 +1,38 @@
+---
+/** Nota escrita a mano con una flecha garabateada. */
+import { doodleId } from '@/lib/doodles';
+
+interface Props {
+  arrow?: 'arrow' | 'arrow-up';
+  /** Refleja la flecha horizontalmente. */
+  flip?: boolean;
+  /** Inclinación en grados. */
+  tilt?: number;
+  arrowWidth?: number;
+  arrowHeight?: number;
+  class?: string;
+}
+
+const { arrow = 'arrow', flip = false, tilt = 0, arrowWidth = 64, arrowHeight = 44, class: className } = Astro.props;
+---
+
+<span class:list={['annot', className]} style={tilt ? `transform:rotate(${tilt}deg)` : undefined}>
+    <svg
+        class:list={['arr', { flip }]}
+        style={`width:${arrowWidth}px;height:${arrowHeight}px`}
+        aria-hidden="true"
+    >
+        <use href={`#${doodleId(arrow)}`} width="100%" height="100%" />
+    </svg>
+    <slot />
+</span>
+
+<style>
+    .annot {
+        display: inline-flex; align-items: flex-end; gap: .3rem;
+        font-family: var(--hand); font-weight: 700; font-size: 1.55rem; line-height: 1;
+        color: var(--note); white-space: nowrap;
+    }
+    .arr { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+    .flip { transform: scaleX(-1); }
+</style>

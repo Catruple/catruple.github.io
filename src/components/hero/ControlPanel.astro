@@ -1,0 +1,115 @@
+---
+/** "Panel de control" con pestañas (Activos / Populares / Nuevos). */
+import Window from '@/components/ui/Window.astro';
+import Annotation from '@/components/ui/Annotation.astro';
+import PanelRow from './PanelRow.astro';
+import { PANEL_TABS } from '@/data/panel';
+
+const countLabel = (n: number) => `${n} elementos`;
+---
+
+<div class="panel-wrap" data-control-panel>
+    <Window title="Panel de control">
+        <div class="tabs" role="tablist" aria-label="Panel de control">
+            {
+                PANEL_TABS.map((tab, i) => (
+                    <button
+                        class="tab"
+                        role="tab"
+                        id={`tab-${tab.id}`}
+                        aria-controls={`tabpanel-${tab.id}`}
+                        aria-selected={i === 0}
+                        tabindex={i === 0 ? 0 : -1}
+                    >
+                        {tab.label}
+                    </button>
+                ))
+            }
+        </div>
+
+        {
+            PANEL_TABS.map((tab, i) => (
+                <div
+                    class="list"
+                    role="tabpanel"
+                    id={`tabpanel-${tab.id}`}
+                    aria-labelledby={`tab-${tab.id}`}
+                    data-count-label={countLabel(tab.rows.length)}
+                    hidden={i !== 0}
+                >
+                    {tab.rows.map((row) => <PanelRow row={row} />)}
+                </div>
+            ))
+        }
+
+        <div class="statusbar">
+            <span><i class="led"></i>Estado: Operativo</span>
+            <span data-panel-count>{countLabel(PANEL_TABS[0].rows.length)}</span>
+        </div>
+    </Window>
+
+    <Annotation class="panel-note" arrow="arrow-up" tilt={-3} arrowWidth={40} arrowHeight={56}>
+        casi todo funciona (casi)
+    </Annotation>
+</div>
+
+<script>
+    const root = document.querySelector<HTMLElement>('[data-control-panel]');
+    const tabs = [...(root?.querySelectorAll<HTMLButtonElement>('[role="tab"]') ?? [])];
+    const count = root?.querySelector<HTMLElement>('[data-panel-count]');
+
+    const selectTab = (tab: HTMLButtonElement) => {
+        tabs.forEach((t) => {
+            const selected = t === tab;
+            t.setAttribute('aria-selected', String(selected));
+            t.tabIndex = selected ? 0 : -1;
+            const panel = document.getElementById(t.getAttribute('aria-controls') ?? '');
+            if (!panel) return;
+            panel.hidden = !selected;
+            if (selected && count) count.textContent = panel.dataset.countLabel ?? '';
+        });
+    };
+
+    tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => selectTab(tab));
+        tab.addEventListener('keydown', (e) => {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            const step = e.key === 'ArrowRight' ? 1 : tabs.length - 1;
+            const next = tabs[(i + step) % tabs.length];
+            next.focus();
+            selectTab(next);
+        });
+    });
+</script>
+
+<style>
+    .panel-wrap { position: relative; }
+    .panel-note { position: absolute; right: 1rem; bottom: -4.4rem; }
+
+    .tabs { display: flex; gap: .4rem; padding: .7rem .8rem 0; background: var(--paper); border-bottom: 3px solid var(--ink); }
+    .tab {
+        margin-bottom: -3px; padding: .3rem .9rem;
+        font-family: var(--px); font-weight: 700; font-size: .85rem; text-transform: uppercase;
+        color: var(--ink); background: var(--paper-2);
+        border: 3px solid var(--ink); border-radius: 7px 7px 0 0;
+    }
+    .tab:hover { background: #fff; }
+    .tab[aria-selected="true"] { background: var(--ink); color: var(--paper); }
+
+    .list { display: grid; gap: .55rem; padding: .8rem; min-height: 300px; align-content: start; }
+
+    .statusbar {
+        display: flex; justify-content: space-between; align-items: center; padding: .4rem .8rem;
+        border-top: 3px solid var(--ink); background: var(--paper-2);
+        font-family: var(--silk); font-size: .66rem; letter-spacing: .05em; text-transform: uppercase;
+    }
+    .led {
+        display: inline-block; width: 9px; height: 9px; margin-right: .5rem;
+        background: var(--bg); border: 2px solid var(--ink);
+        animation: blink 1.6s steps(2) infinite;
+    }
+
+    @media (max-width: 980px) {
+        .panel-note { position: static; margin-top: 1rem; }
+    }
+</style>

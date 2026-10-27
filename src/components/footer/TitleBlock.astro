@@ -1,0 +1,45 @@
+---
+/** Cajetín de plano. Las celdas con `value: null` muestran la fecha de hoy. */
+import { SITE } from '@/config/site';
+
+interface Props {
+  cells: { label: string; value: string | null }[];
+  note: string;
+}
+
+const { cells, note } = Astro.props;
+---
+
+<div class="tblock">
+    {
+        cells.map((cell) => (
+            <div>
+                <small>{cell.label}</small>
+                {cell.value ?? <span data-today>--/--/----</span>}
+            </div>
+        ))
+    }
+    <div class="wide">
+        <small>NOTA</small>{note}
+        <a href={SITE.github} target="_blank" rel="noopener">GITHUB ↗</a>
+    </div>
+</div>
+
+<script>
+    import { SITE } from '@/config/site';
+
+    const today = new Date().toLocaleDateString(SITE.locale);
+    document.querySelectorAll('[data-today]').forEach((el) => (el.textContent = today));
+</script>
+
+<style>
+    .tblock {
+        display: grid; grid-template-columns: 1fr 1fr;
+        border: 2px solid rgb(var(--fg-rgb) / .8);
+        font-family: var(--silk); font-size: .72rem; letter-spacing: .06em; color: rgb(var(--fg-rgb));
+    }
+    .tblock > div { padding: .55rem .7rem; border: 1px solid rgb(var(--fg-rgb) / .55); }
+    small { display: block; margin-bottom: .2rem; font-size: .56rem; opacity: .8; }
+    .tblock > .wide { grid-column: 1 / -1; }
+    a { margin-left: .4rem; color: inherit; text-decoration: underline; }
+</style>

@@ -1,0 +1,22 @@
+---
+/** Garabato en tinta (o en color de acento) colocado en el plano. */
+import { doodleId, type DoodleName } from '@/lib/doodles';
+import { place, type Box } from '@/lib/placement';
+
+interface Props {
+  name: DoodleName;
+  box: Box;
+  accent?: boolean;
+}
+
+const { name, box, accent = false } = Astro.props;
+---
+
+<svg class:list={['doodle', { accent }]} style={place(box)} aria-hidden="true">
+    <use href={`#${doodleId(name)}`} width="100%" height="100%" />
+</svg>
+
+<style>
+    .doodle { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+    .accent { color: var(--note); }
+</style>

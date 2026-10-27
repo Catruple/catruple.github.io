@@ -1,0 +1,27 @@
+---
+/** Reloj de la barra de menú (hora local del visitante). */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={['clock', className]} data-clock>--:--</span>
+
+<script>
+    import { SITE } from '@/config/site';
+
+    const clock = document.querySelector<HTMLElement>('[data-clock]');
+    if (clock) {
+        const tick = () => {
+            clock.textContent = new Date().toLocaleTimeString(SITE.locale, { hour: '2-digit', minute: '2-digit' });
+        };
+        tick();
+        setInterval(tick, 30_000);
+    }
+</script>
+
+<style>
+    .clock { min-width: 3.4rem; white-space: nowrap; font-family: var(--silk); font-size: .8rem; letter-spacing: .05em; text-align: right; }
+</style>

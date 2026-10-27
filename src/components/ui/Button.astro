@@ -1,0 +1,37 @@
+---
+/** Botón estilo Mac. Con `href` se renderiza como enlace. */
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = Omit<HTMLAttributes<'a'> & HTMLAttributes<'button'>, 'type'> & {
+  href?: string;
+  variant?: 'default' | 'primary';
+  size?: 'md' | 'sm';
+  type?: 'button' | 'submit' | 'reset';
+};
+
+const { href, variant = 'default', size = 'md', type = 'button', class: className, ...attrs } = Astro.props;
+const classes = ['btn', { primary: variant === 'primary', sm: size === 'sm' }, className];
+---
+
+{
+    href !== undefined
+        ? <a href={href} class:list={classes} {...attrs}><slot /></a>
+        : <button type={type} class:list={classes} {...attrs}><slot /></button>
+}
+
+<style>
+    .btn {
+        display: inline-flex; align-items: center; gap: .5rem;
+        font-family: var(--px); font-weight: 700; font-size: 1rem;
+        text-transform: uppercase; letter-spacing: .03em; text-decoration: none;
+        color: var(--ink); background: var(--paper);
+        border: 3px solid var(--ink); border-radius: 10px;
+        padding: .6rem 1.2rem; box-shadow: 4px 4px 0 var(--ink);
+        transition: transform .08s, box-shadow .08s;
+    }
+    .btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+    .btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--ink); background: var(--ink); color: var(--paper); }
+    .primary { background: var(--acc); }
+    .sm { padding: .2rem .75rem; font-size: .85rem; border-radius: 8px; box-shadow: 3px 3px 0 var(--ink); white-space: nowrap; }
+    .sm:hover { box-shadow: 1px 1px 0 var(--ink); }
+</style>

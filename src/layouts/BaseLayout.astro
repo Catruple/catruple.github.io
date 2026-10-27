@@ -1,0 +1,45 @@
+---
+/** Documento HTML: <head>, fuentes, estilos globales y tema guardado. */
+import '@/styles/global.css';
+import { SITE, THEME_STORAGE_KEY } from '@/config/site';
+import { DEFAULT_THEME } from '@/data/themes';
+import { themeCss } from '@/lib/theme-css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = SITE.title, description = SITE.description } = Astro.props;
+---
+
+<!doctype html>
+<html lang={SITE.lang} data-theme={DEFAULT_THEME.id}>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content={description} />
+        <meta name="generator" content={Astro.generator} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{title}</title>
+
+        <!-- Aplica el color guardado antes de pintar, para evitar un parpadeo. -->
+        <script is:inline define:vars={{ storageKey: THEME_STORAGE_KEY }}>
+            try {
+                var saved = localStorage.getItem(storageKey);
+                if (saved) document.documentElement.setAttribute('data-theme', saved);
+            } catch (e) {}
+        </script>
+        <Fragment set:html={`<style>${themeCss()}</style>`} />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Pixelify+Sans:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <slot />
+    </body>
+</html>

@@ -1,0 +1,20 @@
+---
+/** Rompecabezas deslizante de 4×4 (0 = hueco). */
+interface Props {
+  tiles: number[];
+}
+
+const { tiles } = Astro.props;
+const last = tiles.length - 1;
+---
+
+<div class="pz">
+    {tiles.map((n, i) => <b class:list={{ gap: !n, dashed: i === last }}>{n || ''}</b>)}
+</div>
+
+<style>
+    .pz { display: grid; grid-template-columns: repeat(4, 1fr); }
+    b { height: 130px; display: grid; place-items: center; margin: -3px; border: 5px solid currentColor; font-size: 62px; }
+    .gap { background: repeating-conic-gradient(currentColor 0% 25%, transparent 0% 50%) 0 0 / 14px 14px; opacity: .6; }
+    .dashed { border-style: dashed; }
+</style>

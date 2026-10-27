@@ -1,0 +1,102 @@
+---
+/** Menú "Pantalla": cambia el color del sitio y lo recuerda en localStorage. */
+import { DEFAULT_THEME, THEMES } from '@/data/themes';
+---
+
+<div class="theme-switcher" data-theme-switcher>
+    <button
+        class="menu-btn"
+        aria-haspopup="menu"
+        aria-expanded="false"
+        aria-controls="theme-menu"
+        data-theme-toggle
+    >
+        <i class="sw" style={`--s:${DEFAULT_THEME.bg}`} data-theme-swatch></i>Pantalla
+    </button>
+    <div class="dropdown" id="theme-menu" role="menu" hidden>
+        {
+            THEMES.map((t) => (
+                <button role="menuitemradio" aria-checked={t.id === DEFAULT_THEME.id} data-theme-option={t.id}>
+                    <i class="sw" style={`--s:${t.bg}`} />
+                    {t.label}
+                </button>
+            ))
+        }
+    </div>
+</div>
+
+<script>
+    import { DEFAULT_THEME, THEMES } from '@/data/themes';
+    import { THEME_STORAGE_KEY } from '@/config/site';
+
+    const root = document.querySelector<HTMLElement>('[data-theme-switcher]');
+    const toggleBtn = root?.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+    const menu = root?.querySelector<HTMLElement>('[role="menu"]');
+    const swatch = root?.querySelector<HTMLElement>('[data-theme-swatch]');
+
+    if (toggleBtn && menu && swatch) {
+        const options = [...menu.querySelectorAll<HTMLButtonElement>('[data-theme-option]')];
+
+        const applyTheme = (id: string, save: boolean) => {
+            const theme = THEMES.find((t) => t.id === id) ?? DEFAULT_THEME;
+            document.documentElement.dataset.theme = theme.id;
+            swatch.style.setProperty('--s', theme.bg);
+            options.forEach((o) => o.setAttribute('aria-checked', String(o.dataset.themeOption === theme.id)));
+            if (save) {
+                try {
+                    localStorage.setItem(THEME_STORAGE_KEY, theme.id);
+                } catch {}
+            }
+        };
+
+        const setOpen = (open: boolean) => {
+            menu.hidden = !open;
+            toggleBtn.setAttribute('aria-expanded', String(open));
+        };
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setOpen(Boolean(menu.hidden));
+        });
+        menu.addEventListener('click', (e) => {
+            const option = (e.target as Element).closest<HTMLElement>('[data-theme-option]');
+            if (!option) return;
+            applyTheme(option.dataset.themeOption!, true);
+            setOpen(false);
+        });
+        document.addEventListener('click', () => setOpen(false));
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setOpen(false);
+        });
+
+        applyTheme(document.documentElement.dataset.theme ?? DEFAULT_THEME.id, false);
+    }
+</script>
+
+<style>
+    .theme-switcher { position: relative; }
+
+    .menu-btn {
+        display: flex; align-items: center; gap: .5rem; padding: .25rem .75rem;
+        background: transparent; border: 0;
+        font-family: var(--px); font-weight: 700; font-size: .92rem; letter-spacing: .05em;
+        color: var(--ink); text-transform: uppercase;
+    }
+    .menu-btn:hover, .menu-btn[aria-expanded="true"] { background: var(--ink); color: var(--paper); }
+
+    .sw { display: inline-block; width: 16px; height: 16px; flex: none; border: 2px solid var(--ink); background: var(--s, var(--bg)); }
+    .menu-btn:hover .sw, .menu-btn[aria-expanded="true"] .sw { border-color: var(--paper); }
+
+    .dropdown {
+        position: absolute; right: 0; top: calc(100% + 8px); z-index: 200; min-width: 230px;
+        padding: .25rem 0; background: var(--paper); border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--ink);
+    }
+    .dropdown button {
+        display: flex; align-items: center; gap: .7rem; width: 100%; padding: .38rem .9rem;
+        border: 0; background: transparent; text-align: left;
+        font-family: var(--px); font-size: .95rem; font-weight: 600; color: var(--ink);
+    }
+    .dropdown button:hover { background: var(--ink); color: var(--paper); }
+    .dropdown button:hover .sw { border-color: var(--paper); }
+    .dropdown button[aria-checked="true"]::after { content: "✓"; margin-left: auto; }
+</style>

@@ -1,0 +1,43 @@
+---
+/** Ventana estilo Mac clásico: barra de título rayada + contenido. */
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'div'> & {
+  /** Etiqueta raíz (p. ej. "dialog" para el cuadro de diálogo). */
+  as?: 'div' | 'dialog' | 'article' | 'section';
+  title: string;
+  titleId?: string;
+  /** Si se indica, la casilla de cerrar es un botón con esta etiqueta accesible. */
+  closeLabel?: string;
+};
+
+const { as: Tag = 'div', title, titleId, closeLabel, class: className, ...attrs } = Astro.props;
+---
+
+<Tag class:list={['win', className]} {...attrs}>
+    <div class="win-bar">
+        {
+            closeLabel
+                ? <button type="button" class="close" aria-label={closeLabel} data-window-close />
+                : <span class="close" aria-hidden="true" />
+        }
+        <span class="ttl" id={titleId}>{title}</span>
+    </div>
+    <slot />
+</Tag>
+
+<style>
+    .win {
+        background: var(--paper); color: var(--ink);
+        border: 3px solid var(--ink); border-radius: 9px 9px 3px 3px;
+        box-shadow: 7px 7px 0 var(--ink); overflow: hidden;
+    }
+    .win-bar {
+        display: flex; align-items: center; gap: .6rem; padding: 4px 8px; border-bottom: 3px solid var(--ink);
+        background-color: var(--paper);
+        background-image: repeating-linear-gradient(to bottom, var(--ink) 0 2px, transparent 2px 5px);
+    }
+    .close { width: 15px; height: 15px; flex: none; padding: 0; border: 2px solid var(--ink); background: var(--paper); }
+    .win-bar::after { content: ""; width: 15px; flex: none; }
+    .ttl { margin: 0 auto; padding: 0 .7rem; background: var(--paper); font-weight: 700; font-size: .92rem; text-transform: uppercase; letter-spacing: .06em; }
+</style>

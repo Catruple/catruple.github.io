@@ -1,0 +1,19 @@
+---
+/** Texto gigante en el plano, una línea por renglón. */
+import { place, type Box } from '@/lib/placement';
+
+interface Props {
+  lines: string[];
+  box: Box;
+}
+
+const { lines, box } = Astro.props;
+---
+
+<p class="type" style={place(box)}>
+    {lines.map((line, i) => (i === 0 ? line : [<br />, line]))}
+</p>
+
+<style>
+    .type { margin: 0; font-family: var(--px); font-weight: 700; font-size: 150px; line-height: 1; color: rgb(var(--fg-rgb) / .2); }
+</style>

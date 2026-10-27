@@ -1,0 +1,21 @@
+---
+/** Publica una sola vez los <symbol> de los garabatos para reutilizarlos con <use>. */
+import { DOODLES, doodleId, type DoodleName } from '@/lib/doodles';
+
+const entries = Object.entries(DOODLES) as [DoodleName, (typeof DOODLES)[DoodleName]][];
+---
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+        {
+            entries.map(([name, d]) => (
+                <symbol
+                    id={doodleId(name)}
+                    viewBox={d.viewBox}
+                    preserveAspectRatio={'stretch' in d ? 'none' : undefined}
+                    set:html={d.body}
+                />
+            ))
+        }
+    </defs>
+</svg>

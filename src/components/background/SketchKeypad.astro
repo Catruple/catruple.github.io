@@ -1,0 +1,23 @@
+---
+/** Teclado numérico dibujado. */
+import { place, type Box } from '@/lib/placement';
+
+interface Props {
+  keys: string[];
+  box: Box;
+}
+
+const { keys, box } = Astro.props;
+---
+
+<div class="keys" style={place(box)}>
+    {keys.map((key) => <b>{key}</b>)}
+</div>
+
+<style>
+    .keys { display: grid; grid-template-columns: repeat(4, 130px); gap: 18px; padding: 22px; border: 6px solid currentColor; }
+    b {
+        height: 100px; display: grid; place-items: center; font-size: 50px;
+        border: 5px solid currentColor; box-shadow: 8px 8px 0 rgb(var(--fg-rgb) / .18);
+    }
+</style>

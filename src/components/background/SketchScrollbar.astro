@@ -1,0 +1,18 @@
+---
+/** Barra de desplazamiento dibujada en el borde derecho de una ventana. */
+---
+
+<div class="sbar"><i class="up"></i><i class="dn"></i></div>
+
+<style>
+    .sbar { position: absolute; right: 0; top: 56px; bottom: 0; width: 58px; border-left: 6px solid currentColor; }
+    i { position: absolute; left: 0; right: 0; height: 58px; }
+    .up { top: 0; border-bottom: 6px solid currentColor; }
+    .dn { bottom: 0; border-top: 6px dashed currentColor; }
+    i::after {
+        content: ""; position: absolute; left: 50%; top: 50%; margin: -9px 0 0 -13px;
+        border-left: 13px solid transparent; border-right: 13px solid transparent;
+    }
+    .up::after { border-bottom: 18px solid currentColor; }
+    .dn::after { border-top: 18px solid currentColor; }
+</style>

@@ -1,0 +1,79 @@
+---
+/** "El taller": repositorio de proyectos con filtros y búsqueda. */
+import Container from '@/components/ui/Container.astro';
+import FilterChips from './FilterChips.astro';
+import ProjectCard from './ProjectCard.astro';
+import SketchCard from './SketchCard.astro';
+import { PROJECTS } from '@/data/projects';
+import { SECTION_IDS } from '@/config/site';
+---
+
+<Container as="section" class="catalog" id={SECTION_IDS.catalog} data-catalog>
+    <div class="head">
+        <div>
+            <span class="kicker">HOJA 02 / REPOSITORIO</span>
+            <h2>Utilidades &amp; proyectos <em>(el taller)</em></h2>
+        </div>
+        <FilterChips />
+    </div>
+    <p class="count" data-catalog-count aria-live="polite"></p>
+
+    <div class="grid">
+        {PROJECTS.map((project) => <ProjectCard project={project} />)}
+        <SketchCard data-catalog-sketch>aquí va otra herramienta… cuando la termine</SketchCard>
+    </div>
+
+    <p class="empty" data-catalog-empty hidden>No encontré nada con eso. El plano sigue en blanco ✎</p>
+</Container>
+
+<script>
+    import { ALL_CATEGORY } from '@/data/categories';
+    import { subscribe } from '@/scripts/catalog-store';
+
+    const root = document.querySelector<HTMLElement>('[data-catalog]');
+
+    if (root) {
+        const cards = [...root.querySelectorAll<HTMLElement>('[data-category]')];
+        const sketch = root.querySelector<HTMLElement>('[data-catalog-sketch]');
+        const empty = root.querySelector<HTMLElement>('[data-catalog-empty]');
+        const count = root.querySelector<HTMLElement>('[data-catalog-count]');
+
+        subscribe(({ filter, query }) => {
+            let shown = 0;
+            cards.forEach((card) => {
+                const matchesFilter = filter === ALL_CATEGORY || card.dataset.category === filter;
+                const matchesQuery = !query || (card.textContent ?? '').toLowerCase().includes(query);
+                card.hidden = !(matchesFilter && matchesQuery);
+                if (!card.hidden) shown++;
+            });
+            if (sketch) sketch.hidden = filter !== ALL_CATEGORY || !!query;
+            if (empty) empty.hidden = shown > 0;
+            if (count) count.textContent = `Mostrando ${shown} de ${cards.length} planos`;
+        });
+    }
+</script>
+
+<style>
+    .catalog { scroll-margin-top: 7rem; padding-top: 1rem; }
+
+    .head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.2rem; margin-bottom: 1rem; }
+    .kicker {
+        display: block; margin-bottom: .5rem;
+        font-family: var(--silk); font-size: .72rem; letter-spacing: .12em; color: rgb(var(--fg-rgb) / .85);
+    }
+    h2 {
+        margin: 0; font-family: var(--px); font-weight: 700; line-height: 1.1; text-transform: uppercase;
+        font-size: clamp(1.6rem, 3.2vw, 2.6rem); color: rgb(var(--fg-rgb)); text-shadow: 3px 3px 0 var(--sh);
+    }
+    h2 em {
+        display: inline-block; margin-left: .4rem; transform: rotate(-3deg);
+        font-style: normal; font-family: var(--hand); text-transform: none; font-size: 1.3em;
+        color: var(--note); text-shadow: none;
+    }
+
+    .count { margin: 0 0 1.6rem; font-family: var(--silk); font-size: .66rem; letter-spacing: .1em; color: rgb(var(--fg-rgb) / .85); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 2.6rem 2.2rem; padding-top: .8rem; }
+
+    .empty { margin: 3rem 0; text-align: center; font-family: var(--hand); font-size: 1.8rem; color: var(--note); }
+</style>

@@ -1,0 +1,43 @@
+---
+/** Barra de menú fija estilo Mac: compone las piezas del encabezado. */
+import Brand from './Brand.astro';
+import MainNav from './MainNav.astro';
+import SearchBox from './SearchBox.astro';
+import ThemeSwitcher from './ThemeSwitcher.astro';
+import LoginButton from './LoginButton.astro';
+import Clock from './Clock.astro';
+---
+
+<header class="menubar">
+    <Brand />
+    <MainNav class="nav" />
+    <span class="spacer"></span>
+    <SearchBox class="search-slot desktop-only" />
+    <ThemeSwitcher />
+    <LoginButton />
+    <Clock class="desktop-only" />
+</header>
+
+<style>
+    .menubar {
+        position: sticky; top: 0; z-index: 100;
+        display: flex; align-items: center; gap: .9rem;
+        padding: .4rem 1.2rem .4rem 1.4rem;
+        background: var(--paper); color: var(--ink);
+        border-bottom: 3px solid var(--ink);
+        box-shadow: 0 5px 0 rgb(0 0 0 / .28);
+    }
+    /* Ninguna pieza se aplasta; solo el buscador cede algo de ancho. */
+    .menubar > :global(*) { flex-shrink: 0; }
+    .menubar > .search-slot { flex: 0 1 230px; min-width: 150px; }
+    .spacer { flex: 1; }
+
+    /* Si no cabe todo en una fila, el menú baja a una segunda fila. */
+    @media (max-width: 1280px) {
+        .menubar { flex-wrap: wrap; gap: .4rem .8rem; }
+        .nav { order: 5; width: 100%; overflow-x: auto; }
+    }
+    @media (max-width: 860px) {
+        .menubar .desktop-only { display: none; }
+    }
+</style>

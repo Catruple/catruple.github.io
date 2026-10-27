@@ -1,0 +1,27 @@
+---
+/** Barra de menú dibujada (sin terminar). */
+import { place, type Box } from '@/lib/placement';
+
+interface Props {
+  items: string[];
+  box: Box;
+}
+
+const { items, box } = Astro.props;
+---
+
+<div class="menubar" style={place(box)}>
+    <span class="sq"></span>
+    {items.map((item) => <span>{item}</span>)}
+    <span class="dashbox"></span>
+</div>
+
+<style>
+    .menubar {
+        height: 78px; display: flex; align-items: center; gap: 56px; padding: 0 36px;
+        border: 6px solid currentColor;
+        font-size: 36px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .sq { width: 34px; height: 34px; border: 6px solid currentColor; }
+    .dashbox { width: 160px; height: 38px; border: 6px dashed currentColor; }
+</style>

@@ -1,0 +1,19 @@
+---
+/** Nota escrita a mano sobre el plano. */
+import { place } from '@/lib/placement';
+
+interface Props {
+  text: string;
+  x: number;
+  y: number;
+  rotate?: number;
+}
+
+const { text, x, y, rotate } = Astro.props;
+---
+
+<span class="note" style={place({ x, y, rotate })}>{text}</span>
+
+<style>
+    .note { font-family: var(--hand); font-weight: 700; font-size: 74px; line-height: 1; white-space: nowrap; color: var(--note); }
+</style>

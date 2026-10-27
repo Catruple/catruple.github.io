@@ -1,0 +1,73 @@
+---
+/** Buscador del repositorio. Atajo: "/" para enfocarlo, Esc para limpiarlo. */
+import PixelIcon from '@/components/ui/PixelIcon.astro';
+import { SECTION_IDS } from '@/config/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<label class:list={['search', className]}>
+    <PixelIcon name="lens" size={22} />
+    <input
+        type="search"
+        placeholder="Buscar…  ( / )"
+        autocomplete="off"
+        aria-label="Buscar herramientas o proyectos"
+        data-catalog-search
+        data-scroll-target={`#${SECTION_IDS.catalog}`}
+    />
+</label>
+
+<script>
+    import { normalizeQuery, setQuery, subscribe } from '@/scripts/catalog-store';
+
+    const input = document.querySelector<HTMLInputElement>('[data-catalog-search]');
+
+    if (input) {
+        const target = input.dataset.scrollTarget;
+        const isTyping = () => /^(INPUT|TEXTAREA)$/.test(document.activeElement?.tagName ?? '');
+
+        input.addEventListener('input', () => {
+            setQuery(input.value);
+            if (normalizeQuery(input.value) && target) {
+                document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                setQuery('');
+                input.blur();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '/' && !isTyping()) {
+                e.preventDefault();
+                input.focus();
+            }
+        });
+
+        // Si otro componente limpia la búsqueda, el campo se vacía también.
+        subscribe(({ query }) => {
+            if (normalizeQuery(input.value) !== query) input.value = query;
+        });
+    }
+</script>
+
+<style>
+    .search {
+        display: flex; align-items: center; gap: .5rem; width: 230px; padding: .15rem .6rem;
+        background: #fff; border: 3px solid var(--ink);
+    }
+    .search input {
+        width: 100%; border: 0; outline: 0; background: transparent;
+        font-family: var(--px); font-size: .9rem; color: var(--ink);
+    }
+    .search input::placeholder { color: #77735f; }
+    .search:focus-within { box-shadow: 3px 3px 0 var(--ink); }
+</style>

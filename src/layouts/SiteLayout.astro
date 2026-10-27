@@ -1,0 +1,31 @@
+---
+/** Estructura común de las páginas: fondo, barra de menú, pie y diálogo. */
+import BaseLayout from './BaseLayout.astro';
+import DoodleSprite from '@/components/ui/DoodleSprite.astro';
+import AlertDialog from '@/components/ui/AlertDialog.astro';
+import BlueprintBackground from '@/components/background/BlueprintBackground.astro';
+import MenuBar from '@/components/header/MenuBar.astro';
+import SiteFooter from '@/components/footer/SiteFooter.astro';
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const props = Astro.props;
+---
+
+<BaseLayout {...props}>
+    <DoodleSprite />
+    <BlueprintBackground />
+    <MenuBar />
+    <main>
+        <slot />
+    </main>
+    <SiteFooter />
+    <AlertDialog />
+</BaseLayout>
+
+<style>
+    main { position: relative; z-index: 1; }
+</style>
