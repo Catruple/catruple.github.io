@@ -4,7 +4,7 @@ import Window from '@/components/ui/Window.astro';
 import PixelIcon from '@/components/ui/PixelIcon.astro';
 import Button from '@/components/ui/Button.astro';
 import { categoryLabel } from '@/data/categories';
-import { cardDomId, type Project } from '@/data/projects';
+import { cardDomId, guideDomId, type Project } from '@/data/projects';
 
 interface Props {
   project: Project;
@@ -25,17 +25,26 @@ const { project } = Astro.props;
             {project.wip && <span class="stamp">WIP</span>}
             <div class="foot">
                 <span>{project.meta}</span>
-                {
-                    project.url ? (
-                        <Button size="sm" href={project.url} target="_blank" rel="noopener">
-                            {project.cta}
-                        </Button>
-                    ) : (
-                        <Button size="sm" aria-haspopup="dialog" data-project-popup={project.id}>
-                            {project.cta}
-                        </Button>
-                    )
-                }
+                <div class="actions">
+                    {
+                        project.guide && (
+                            <Button size="sm" aria-haspopup="dialog" data-modal-open={guideDomId(project.id)}>
+                                Cómo usar
+                            </Button>
+                        )
+                    }
+                    {
+                        project.url ? (
+                            <Button size="sm" href={project.url} target="_blank" rel="noopener">
+                                {project.cta}
+                            </Button>
+                        ) : (
+                            <Button size="sm" aria-haspopup="dialog" data-project-popup={project.id}>
+                                {project.cta}
+                            </Button>
+                        )
+                    }
+                </div>
             </div>
         </div>
     </Window>
@@ -43,10 +52,8 @@ const { project } = Astro.props;
 
 <script>
     import { openAlert, type AlertOptions } from '@/scripts/alert-dialog';
-    import { PROJECTS, type Project } from '@/data/projects';
+    import { PROJECT_LIST, type Project } from '@/data/projects';
     import { SITE } from '@/config/site';
-
-    const projects: readonly Project[] = PROJECTS;
 
     // Proyectos sin `url` en data/projects.ts: muestran su comando o un aviso.
     const popupFor = (project: Project): AlertOptions =>
@@ -65,7 +72,7 @@ const { project } = Astro.props;
 
     document.querySelectorAll<HTMLButtonElement>('[data-project-popup]').forEach((button) =>
         button.addEventListener('click', () => {
-            const project = projects.find((p) => p.id === button.dataset.projectPopup);
+            const project = PROJECT_LIST.find((p) => p.id === button.dataset.projectPopup);
             if (project) openAlert(popupFor(project));
         }),
     );
@@ -119,6 +126,8 @@ const { project } = Astro.props;
         display: flex; justify-content: space-between; align-items: center; gap: .6rem;
         margin-top: auto; padding: .8rem 0 1rem; border-top: 3px dashed currentColor;
     }
+    .foot { flex-wrap: wrap; }
+    .actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; margin-left: auto; }
     .foot > span { font-family: var(--silk); font-size: .66rem; letter-spacing: .05em; text-transform: uppercase; }
 
     .stamp {

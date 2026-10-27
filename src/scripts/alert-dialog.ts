@@ -57,15 +57,10 @@ async function copyText(text: string, fallbackEl: Element): Promise<boolean> {
   }
 }
 
-/** Conecta cerrar, clic fuera del diálogo y el botón "Copiar". */
+/** Conecta el botón "Copiar". El cierre lo gestiona scripts/modal.ts. */
 export function initAlertDialog(): void {
   const dialog = getDialog();
   if (!dialog) return;
-
-  dialog.querySelector('[data-window-close]')?.addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) dialog.close();
-  });
 
   const codeEl = dialog.querySelector('[data-alert-code-text]');
   const copyBtn = dialog.querySelector<HTMLButtonElement>('[data-alert-copy]');

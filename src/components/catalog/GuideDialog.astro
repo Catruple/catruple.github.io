@@ -1,0 +1,53 @@
+---
+/** Popup "Cómo usar" de un proyecto. El texto sale de src/data/guides/<guide>.ts */
+import { getEntry, render } from 'astro:content';
+import Modal from '@/components/ui/Modal.astro';
+import Prose from '@/components/ui/Prose.astro';
+import Button from '@/components/ui/Button.astro';
+import { guideDomId, type Project } from '@/data/projects';
+
+interface Props {
+  project: Project & { guide: string };
+}
+
+const { project } = Astro.props;
+const entry = await getEntry('guides', project.guide);
+
+if (!entry) {
+  throw new Error(
+    `El proyecto "${project.id}" tiene guide: '${project.guide}', pero no existe ` +
+      `src/data/guides/${project.guide}.ts. Créala con: npm run guide -- <archivo.md|.txt> ${project.id}`,
+  );
+}
+
+const { Content } = await render(entry);
+---
+
+<Modal id={guideDomId(project.id)} title={entry.data.windowTitle ?? 'Ayuda'} width={640}>
+    <div class="body">
+        <h2 class="heading">{entry.data.title ?? `Cómo usar · ${project.title}`}</h2>
+        <Prose><Content /></Prose>
+    </div>
+    <form method="dialog" class="actions">
+        <Button size="sm" variant="primary" type="submit">Entendido</Button>
+    </form>
+</Modal>
+
+<style>
+    .body {
+        flex: 1; min-height: 0; overflow-y: auto; padding: 1.3rem 1.5rem 1rem;
+        background-color: var(--paper);
+        background-image: radial-gradient(rgb(var(--ink-rgb) / .08) 1.2px, transparent 1.5px);
+        background-size: 5px 5px;
+    }
+    .heading {
+        display: inline-block; margin: 0 0 1rem; padding: .2rem .6rem;
+        font-family: var(--px); font-weight: 700; font-size: 1.35rem; line-height: 1.1; text-transform: uppercase;
+        color: var(--paper); background: var(--ink); box-shadow: 4px 4px 0 var(--acc);
+        transform: rotate(-1deg);
+    }
+    .actions {
+        display: flex; justify-content: flex-end; margin: 0; padding: .7rem 1.5rem .9rem;
+        border-top: 3px solid var(--ink); background: var(--paper-2);
+    }
+</style>

@@ -1,6 +1,9 @@
 # build output
 dist/
 .astro/
+CLAUDE.md
+AGENTS.md
+GUIA-SCRIPT-GUIAS.md
 
 # dependencies
 node_modules/

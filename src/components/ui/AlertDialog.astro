@@ -1,19 +1,11 @@
 ---
-/** Cuadro de diálogo estilo Mac. Se abre desde cualquier script con openAlert(). */
-import Window from './Window.astro';
+/** Aviso estilo Mac. Se abre desde cualquier script con openAlert(). */
+import Modal from './Modal.astro';
 import Button from './Button.astro';
 import PixelIcon from './PixelIcon.astro';
 ---
 
-<Window
-    as="dialog"
-    class="alert"
-    title="Aviso"
-    titleId="alert-title"
-    closeLabel="Cerrar"
-    aria-labelledby="alert-title"
-    data-alert-dialog
->
+<Modal id="alert" title="Aviso" data-alert-dialog>
     <div class="alert-body">
         <PixelIcon name="alert" size={48} />
         <p data-alert-message></p>
@@ -26,7 +18,7 @@ import PixelIcon from './PixelIcon.astro';
         <Button size="sm" href="#" target="_blank" rel="noopener" hidden data-alert-link>GitHub</Button>
         <Button size="sm" variant="primary" type="submit" autofocus>OK</Button>
     </form>
-</Window>
+</Modal>
 
 <script>
     import { initAlertDialog } from '@/scripts/alert-dialog';
@@ -34,8 +26,6 @@ import PixelIcon from './PixelIcon.astro';
 </script>
 
 <style>
-    .alert { width: min(92vw, 470px); margin: auto; padding: 0; }
-    .alert::backdrop { background: repeating-conic-gradient(rgb(0 0 0 / .5) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px; }
     .alert-body { display: flex; gap: 1.1rem; align-items: flex-start; padding: 1.3rem 1.3rem .6rem; }
     .alert-body p { margin: 0; font-size: 1.05rem; }
     .alert-code { display: flex; align-items: center; gap: .7rem; margin: .4rem 1.3rem 0; }

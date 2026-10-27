@@ -8,6 +8,9 @@ import type { IconName } from '@/lib/pixel-icons';
  *   1. `url`     → abre el enlace en una pestaña nueva.
  *   2. `command` → muestra un popup con el comando para copiar.
  *   3. nada      → avisa que aún no hay enlace.
+ *
+ * `guide` añade además un botón "Cómo usar" con la guía de src/data/guides/<guide>.ts.
+ * Para crearla desde un .md o .txt:  npm run guide -- <archivo> <id-del-proyecto>
  * =====================================================
  */
 
@@ -34,6 +37,8 @@ export interface Project {
   cta: string;
   url: string;
   command?: ProjectCommand;
+  /** Guía "Cómo usar": nombre del archivo en src/data/guides, sin .ts. */
+  guide?: string;
   /** Muestra el sello "WIP". */
   wip?: boolean;
 }
@@ -79,6 +84,7 @@ export const PROJECTS = [
       code: 'irm christitus.com/win | iex',
       source: { href: 'https://christitus.com/windows-tool/', text: 'Guía oficial' },
     },
+    guide: 'debloater', // → src/data/guides/debloater.ts
   },
   {
     id: 'portal',
@@ -121,5 +127,11 @@ export const PROJECTS = [
 
 export type ProjectId = (typeof PROJECTS)[number]['id'];
 
+/** Los mismos proyectos, tipados con todos los campos opcionales de `Project`. */
+export const PROJECT_LIST: readonly Project[] = PROJECTS;
+
 /** id del elemento HTML de la tarjeta de un proyecto. */
 export const cardDomId = (id: string) => `card-${id}`;
+
+/** id del popup "Cómo usar" de un proyecto. */
+export const guideDomId = (id: string) => `guide-${id}`;

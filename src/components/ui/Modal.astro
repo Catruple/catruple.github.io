@@ -1,0 +1,45 @@
+---
+/**
+ * Ventana modal estilo Mac (<dialog>). Se cierra con la casilla, con Esc o con clic fuera.
+ * Se abre con openModal(id) o con cualquier elemento que tenga data-modal-open="<id>".
+ */
+import Window from './Window.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  /** Ancho máximo en px. */
+  width?: number;
+  class?: string;
+  [attr: `data-${string}`]: unknown;
+}
+
+const { id, title, width = 470, class: className, ...attrs } = Astro.props;
+const titleId = `${id}-title`;
+---
+
+<Window
+    as="dialog"
+    id={id}
+    class:list={['modal', className]}
+    title={title}
+    titleId={titleId}
+    closeLabel="Cerrar"
+    aria-labelledby={titleId}
+    style={`--modal-w:${width}px`}
+    data-modal
+    {...attrs}
+>
+    <slot />
+</Window>
+
+<script>
+    import { initModals } from '@/scripts/modal';
+    initModals();
+</script>
+
+<style>
+    .modal { width: min(92vw, var(--modal-w)); max-height: 88vh; margin: auto; padding: 0; }
+    .modal[open] { display: flex; flex-direction: column; }
+    .modal::backdrop { background: repeating-conic-gradient(rgb(0 0 0 / .5) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px; }
+</style>

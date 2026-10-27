@@ -4,8 +4,11 @@ import Container from '@/components/ui/Container.astro';
 import FilterChips from './FilterChips.astro';
 import ProjectCard from './ProjectCard.astro';
 import SketchCard from './SketchCard.astro';
-import { PROJECTS } from '@/data/projects';
+import GuideDialog from './GuideDialog.astro';
+import { PROJECTS, PROJECT_LIST } from '@/data/projects';
 import { SECTION_IDS } from '@/config/site';
+
+const projectsWithGuide = PROJECT_LIST.filter((p): p is typeof p & { guide: string } => !!p.guide);
 ---
 
 <Container as="section" class="catalog" id={SECTION_IDS.catalog} data-catalog>
@@ -24,6 +27,8 @@ import { SECTION_IDS } from '@/config/site';
     </div>
 
     <p class="empty" data-catalog-empty hidden>No encontré nada con eso. El plano sigue en blanco ✎</p>
+
+    {projectsWithGuide.map((project) => <GuideDialog project={project} />)}
 </Container>
 
 <script>

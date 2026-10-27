@@ -1,0 +1,62 @@
+---
+/** Da formato al HTML que sale de Markdown (.md / .txt): títulos, listas, código, citas… */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['prose', className]}><slot /></div>
+
+<style>
+    .prose { font-size: 1rem; line-height: 1.5; color: var(--ink); overflow-wrap: break-word; }
+    .prose > :global(:first-child) { margin-top: 0; }
+    .prose > :global(:last-child) { margin-bottom: 0; }
+
+    .prose :global(h1),
+    .prose :global(h2),
+    .prose :global(h3) {
+        margin: 1.4rem 0 .5rem; line-height: 1.15;
+        font-family: var(--px); font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
+    }
+    .prose :global(h1) { font-size: 1.35rem; }
+    .prose :global(h2) { font-size: 1.1rem; padding-bottom: .25rem; border-bottom: 3px dashed var(--ink); }
+    .prose :global(h3) { font-size: 1rem; }
+
+    .prose :global(p) { margin: 0 0 .8rem; }
+    .prose :global(strong) { font-weight: 700; }
+    .prose :global(em) { font-family: var(--hand); font-size: 1.2em; font-style: normal; }
+    .prose :global(a) { color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+    .prose :global(a:hover) { background: var(--ink); color: var(--paper); }
+    .prose :global(hr) { margin: 1.2rem 0; border: 0; border-top: 3px dashed var(--ink); }
+
+    .prose :global(ul),
+    .prose :global(ol) { margin: 0 0 .9rem; padding-left: 1.6rem; }
+    .prose :global(li) { margin: .3rem 0; padding-left: .2rem; }
+    .prose :global(ul > li::marker) { content: "■  "; font-size: .7em; }
+    .prose :global(ol > li::marker) { font-family: var(--silk); font-size: .8em; }
+
+    .prose :global(code) {
+        padding: .05rem .35rem; font-family: ui-monospace, Consolas, Menlo, monospace; font-size: .9em;
+        background: var(--paper-2); border: 1px solid var(--ink);
+    }
+    .prose :global(pre) {
+        margin: .4rem 0 1rem; padding: .6rem .8rem; overflow-x: auto;
+        background: var(--ink) !important; color: var(--paper);
+        border: 3px solid var(--ink); box-shadow: 3px 3px 0 var(--acc);
+    }
+    .prose :global(pre code) { padding: 0; background: none; border: 0; color: inherit; font-size: .9rem; }
+
+    .prose :global(blockquote) {
+        margin: 1rem 0; padding: .7rem .9rem;
+        background: var(--acc); border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
+        transform: rotate(-.4deg);
+    }
+    .prose :global(blockquote p) { margin: 0; }
+
+    .prose :global(table) { width: 100%; margin: 0 0 1rem; border-collapse: collapse; font-size: .92rem; }
+    .prose :global(th),
+    .prose :global(td) { padding: .35rem .5rem; border: 2px solid var(--ink); text-align: left; }
+    .prose :global(th) { background: var(--ink); color: var(--paper); font-family: var(--silk); font-size: .75rem; }
+</style>
