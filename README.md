@@ -9,6 +9,15 @@ npm run build    # genera dist/
 npm run check    # revisión de tipos
 ```
 
+## Despliegue
+
+Cada push a `main` ejecuta `.github/workflows/deploy.yml`, que compila con Astro y publica `dist/`
+en GitHub Pages (https://odruu.github.io/Catruple/). En el repositorio, **Settings → Pages → Source**
+debe estar en **GitHub Actions**; si está en "Deploy from a branch", GitHub intenta compilar con Jekyll y falla.
+
+El sitio vive bajo `/Catruple/` (`base` en `astro.config.mjs`). Para enlazar archivos de `public/`
+o páginas internas usa `withBase()` de `src/lib/paths.ts`, nunca rutas que empiecen por `/`.
+
 ## Dónde está cada cosa
 
 ```
