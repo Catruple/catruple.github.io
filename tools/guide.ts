@@ -143,7 +143,8 @@ function assertProject(ids: string[], projectId: string) {
 // ---------------------------------------------------------------------------
 
 async function addGuide(fileArg: string, projectId: string, opts: { id?: string; title?: string; windowTitle?: string; dryRun: boolean }) {
-  const filePath = path.resolve(process.cwd(), fileArg);
+  // npm ejecuta el script desde la raíz del proyecto; INIT_CWD es la carpeta donde se escribió el comando.
+  const filePath = path.resolve(process.env.INIT_CWD ?? process.cwd(), fileArg);
   const ext = path.extname(filePath).toLowerCase();
   if (!existsSync(filePath)) fail(`No existe el archivo: ${filePath}`);
   if (!EXTENSIONS.has(ext)) fail(`Solo se aceptan archivos .md o .txt (recibí "${ext || 'sin extensión'}").`);
