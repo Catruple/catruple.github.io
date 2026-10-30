@@ -1,0 +1,41 @@
+---
+/**
+ * Página 404. GitHub Pages la sirve para cualquier ruta que no exista.
+ * Además lleva los enlaces antiguos (catruple.github.io/Catruple/...) a la raíz,
+ * conservando la búsqueda y el ancla (p. ej. /Catruple/#tools → /#tools).
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/config/site';
+import { withBase } from '@/lib/paths';
+---
+
+<BaseLayout title={`Página no encontrada · ${SITE.name}`}>
+    <script is:inline>
+        (function () {
+            var old = /^\/catruple(?=\/|$)/i;
+            var path = location.pathname;
+            if (old.test(path)) {
+                location.replace((path.replace(old, '') || '/') + location.search + location.hash);
+            }
+        })();
+    </script>
+    <main class="not-found">
+        <h1>404</h1>
+        <p>Esta página no existe o se movió.</p>
+        <a href={withBase()}>Ir al catálogo</a>
+    </main>
+</BaseLayout>
+
+<style>
+    .not-found {
+        min-height: 100vh;
+        display: grid;
+        place-content: center;
+        gap: 1rem;
+        text-align: center;
+        padding: 1rem;
+    }
+    h1 { margin: 0; font-family: var(--tool-title); font-size: 6rem; text-shadow: 4px 4px var(--sh); }
+    p { margin: 0; }
+    a { color: inherit; font-family: var(--tool-title); font-size: 1.6rem; }
+</style>

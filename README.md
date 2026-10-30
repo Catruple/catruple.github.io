@@ -11,12 +11,18 @@ npm run check    # revisión de tipos
 
 ## Despliegue
 
-Cada push a `main` ejecuta `.github/workflows/deploy.yml`, que compila con Astro y publica `dist/`
-en GitHub Pages (https://odruu.github.io/Catruple/). En el repositorio, **Settings → Pages → Source**
-debe estar en **GitHub Actions**; si está en "Deploy from a branch", GitHub intenta compilar con Jekyll y falla.
+El despliegue es manual: **Actions → "Deploy to GitHub Pages" → Run workflow**. El workflow
+`.github/workflows/deploy.yml` compila con Astro y publica `dist/` en GitHub Pages
+(https://catruple.github.io/). En el repositorio, **Settings → Pages → Source** debe estar en
+**GitHub Actions**; si está en "Deploy from a branch", GitHub intenta compilar con Jekyll y falla.
 
-El sitio vive bajo `/Catruple/` (`base` en `astro.config.mjs`). Para enlazar archivos de `public/`
-o páginas internas usa `withBase()` de `src/lib/paths.ts`, nunca rutas que empiecen por `/`.
+Para que el sitio se publique en la raíz del dominio, el repositorio debe llamarse
+`Catruple.github.io` dentro de la organización `Catruple`. Para enlazar archivos de `public/`
+o páginas internas usa `withBase()` de `src/lib/paths.ts`.
+
+`src/pages/404.astro` lleva los enlaces antiguos `catruple.github.io/Catruple/...` a la raíz,
+conservando el ancla (`/Catruple/#tools` → `/#tools`). Para el dominio viejo
+`odruu.github.io/Catruple` hay una página de redirección lista en `redirects/odruu-catruple/`.
 
 ## Guías "Cómo usar"
 

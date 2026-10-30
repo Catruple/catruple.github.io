@@ -2,13 +2,14 @@
 import Modal from '@/components/ui/Modal.astro';
 import Button from '@/components/ui/Button.astro';
 import { legalSections } from '@/data/legal';
+import { SITE } from '@/config/site';
 ---
 {legalSections.map(notice => (
     <Modal id={notice.id} title={notice.window} width={680}>
         <div class="legal-body">
             <h2>{notice.title}</h2>
             {notice.sections.map(([title, text]) => <section><h3>{title}</h3><p>{text}</p></section>)}
-            <a href="https://github.com/Odruu/Catruple/issues" target="_blank" rel="noopener noreferrer">Contacto en GitHub ↗</a>
+            <a href={`${SITE.repo}/issues`} target="_blank" rel="noopener noreferrer">Contacto en GitHub ↗</a>
         </div>
         <form method="dialog"><Button type="submit" size="sm">Entendido</Button></form>
     </Modal>

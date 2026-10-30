@@ -1,6 +1,7 @@
 ---
 import PixelIcon from '@/components/ui/PixelIcon.astro';
 import { PROJECT_LIST } from '@/data/projects';
+import { SITE } from '@/config/site';
 const total = PROJECT_LIST.length;
 const categories = new Set(PROJECT_LIST.map(project => project.category)).size;
 ---
@@ -17,7 +18,7 @@ const categories = new Set(PROJECT_LIST.map(project => project.category)).size;
     </div>
     <div class="bottom">
         <span class="seal">HECHO PARA COMPARTIR</span>
-        <a href="https://github.com/Odruu/Catruple" target="_blank" rel="noopener noreferrer">Explorar el código ↗</a>
+        <a href={SITE.repo} target="_blank" rel="noopener noreferrer">Explorar el código ↗</a>
     </div>
 </aside>
 <style>

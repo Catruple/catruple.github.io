@@ -8,6 +8,8 @@ export const SITE = {
   locale: 'es-CO',
   author: 'Odruu',
   github: 'https://github.com/Odruu',
+  /** Repositorio del sitio (GitHub redirige aquí si el repo cambia de nombre). */
+  repo: 'https://github.com/Catruple/Catruple',
 } as const;
 
 /** Clave de localStorage donde se guarda el color de pantalla elegido. */

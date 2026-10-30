@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catruple se mudó</title>
+    <link rel="canonical" href="https://catruple.github.io/">
+    <meta name="robots" content="noindex">
+    <script>
+        // odruu.github.io/Catruple/<ruta>?<búsqueda>#<ancla> → catruple.github.io/<ruta>?<búsqueda>#<ancla>
+        var rest = location.pathname.replace(/^\/catruple(?=\/|$)/i, '').replace(/^\/+/, '');
+        location.replace('https://catruple.github.io/' + rest + location.search + location.hash);
+    </script>
+    <!-- Sin JavaScript: lleva a la portada nueva. -->
+    <noscript><meta http-equiv="refresh" content="0; url=https://catruple.github.io/"></noscript>
+    <style>body{margin:0;min-height:100vh;display:grid;place-content:center;background:#1b4fd1;color:#fff;font-family:system-ui,sans-serif;text-align:center}a{color:#ffd23f}</style>
+</head>
+<body>
+    <p>Catruple ahora vive en <a href="https://catruple.github.io/">catruple.github.io</a>.</p>
+</body>
+</html>
