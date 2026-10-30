@@ -24,7 +24,7 @@ export const footerTranslations: Record<string, string> = {
   "Antes de instalar": "Before installing",
   "Comprueba la compatibilidad y lee las instrucciones del proyecto. Haz una copia de seguridad antes de ejecutar scripts o cambiar ajustes del sistema.": "Check compatibility and read the project instructions. Back up your data before running scripts or changing system settings.",
   "La letra pequeña": "The fine print",
-  "Hecho por Odruu · Software de sus comunidades.": "Made by Odruu · Software by its communities.",
+  "Hecho por Odruu y ANGELUS11 · Software de sus comunidades.": "Made by Odruu and ANGELUS11· Software by its communities.",
   "Catruple reúne enlaces y guías; no desarrolla ni aloja los instaladores de las herramientas del catálogo. Cada proyecto es responsabilidad de sus autores y se rige por su propia licencia.": "Catruple collects links and guides; it does not develop or host installers for the tools in the catalog. Each project is maintained by its authors and governed by its own license.",
   "Las descargas te llevan a sitios externos. Las versiones, la disponibilidad y las condiciones pueden cambiar. Consulta siempre la página oficial antes de instalar.": "Downloads take you to external websites. Versions, availability and terms may change. Always check the official page before installing.",
   "Las guías son orientativas: ningún programa está libre de fallos y no se garantiza que funcione en todos los equipos. Revisa lo que vas a ejecutar y conserva una copia de tus datos.": "Guides are for reference: no software is free of bugs or guaranteed to work on every computer. Review what you plan to run and keep a backup of your data.",
