@@ -20,6 +20,10 @@ Para que el sitio se publique en la raíz del dominio, el repositorio debe llama
 `Catruple.github.io` dentro de la organización `Catruple`. Para enlazar archivos de `public/`
 o páginas internas usa `withBase()` de `src/lib/paths.ts`.
 
+La vista previa al compartir el enlace (Discord, WhatsApp, X…) sale de las etiquetas Open Graph
+de `src/layouts/BaseLayout.astro` y de la imagen `public/og-image.png` (1200×630). Esa imagen se
+genera desde `tools/og-image.html`; el comando para regenerarla está al principio de ese archivo.
+
 `src/pages/404.astro` lleva los enlaces antiguos `catruple.github.io/Catruple/...` a la raíz,
 conservando el ancla (`/Catruple/#tools` → `/#tools`). Para el dominio viejo
 `odruu.github.io/Catruple` hay una página de redirección lista en `redirects/odruu-catruple/`.

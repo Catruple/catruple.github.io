@@ -9,7 +9,7 @@ import { SITE } from '@/config/site';
 import { withBase } from '@/lib/paths';
 ---
 
-<BaseLayout title={`Página no encontrada · ${SITE.name}`}>
+<BaseLayout title={`Página no encontrada · ${SITE.name}`} noindex>
     <script is:inline>
         (function () {
             var old = /^\/catruple(?=\/|$)/i;
