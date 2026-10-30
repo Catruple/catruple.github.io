@@ -93,7 +93,7 @@ export function initLanguage() {
     applying = true;
     observer.disconnect();
     document.documentElement.lang = english ? 'en' : 'es';
-    document.title = english ? 'Catruple.com — Free tools for your PC' : 'Catruple.com — Centro de Herramientas y Sistemas';
+    document.title = english ? 'Catruple.com — Free tools for your PC' : 'Catruple.com';
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     const nodes: Text[] = [];
     while (walker.nextNode()) nodes.push(walker.currentNode as Text);

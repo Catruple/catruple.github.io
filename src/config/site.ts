@@ -1,7 +1,7 @@
 /** Datos generales del sitio. */
 export const SITE = {
   name: 'Catruple.com',
-  title: 'Catruple.com — Centro de Herramientas y Sistemas',
+  title: 'Catruple.com',
   description:
     'A la mierda sus suscripciones. Catruple reúne herramientas gratis y de código abierto para tu PC, con guías y enlaces oficiales.',
   lang: 'es',
