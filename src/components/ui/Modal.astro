@@ -42,4 +42,5 @@ const titleId = `${id}-title`;
     .modal { width: min(92vw, var(--modal-w)); max-height: 88vh; margin: auto; padding: 0; }
     .modal[open] { display: flex; flex-direction: column; }
     .modal::backdrop { background: repeating-conic-gradient(rgb(0 0 0 / .5) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px; }
+@media (max-width: 700px) { .modal { width: calc(100vw - 24px); max-height: 90dvh; } }
 </style>

@@ -1,0 +1,24 @@
+---
+import Modal from '@/components/ui/Modal.astro';
+import Button from '@/components/ui/Button.astro';
+import { legalSections } from '@/data/legal';
+---
+{legalSections.map(notice => (
+    <Modal id={notice.id} title={notice.window} width={680}>
+        <div class="legal-body">
+            <h2>{notice.title}</h2>
+            {notice.sections.map(([title, text]) => <section><h3>{title}</h3><p>{text}</p></section>)}
+            <a href="https://github.com/Odruu/Catruple/issues" target="_blank" rel="noopener noreferrer">Contacto en GitHub ↗</a>
+        </div>
+        <form method="dialog"><Button type="submit" size="sm">Entendido</Button></form>
+    </Modal>
+))}
+<style>
+ .legal-body { overflow-y: auto; min-height: 0; padding: 1.3rem 1.5rem; color: var(--ink); background: var(--paper); }
+ h2 { font: 400 2rem/1.1 var(--tool-title); margin: 0 0 1.3rem; border-bottom: 3px dashed var(--ink); padding-bottom: .6rem; }
+ h3 { font: 400 1.5rem/1.2 var(--tool-title); margin: 1.2rem 0 .4rem; }
+ p, a { font: 1.2rem/1.5 var(--description); overflow-wrap: anywhere; }
+ p { margin: 0; } a { display: inline-block; color: inherit; margin-top: 1rem; text-underline-offset: 4px; }
+ form { display: flex; justify-content: flex-end; margin: 0; padding: .7rem 1.2rem; background: var(--paper-2); border-top: 3px solid var(--ink); }
+ @media(max-width:700px) { .legal-body { padding: 1rem; } form :global(.btn) { min-height: 44px; } }
+</style>

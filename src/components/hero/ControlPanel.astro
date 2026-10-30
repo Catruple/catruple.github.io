@@ -1,7 +1,6 @@
 ---
 /** "Panel de control" con pestañas (Activos / Populares / Nuevos). */
 import Window from '@/components/ui/Window.astro';
-import Annotation from '@/components/ui/Annotation.astro';
 import PanelRow from './PanelRow.astro';
 import { PANEL_TABS } from '@/data/panel';
 
@@ -48,9 +47,6 @@ const countLabel = (n: number) => `${n} elementos`;
         </div>
     </Window>
 
-    <Annotation class="panel-note" arrow="arrow-up" tilt={-3} arrowWidth={40} arrowHeight={56}>
-        casi todo funciona (casi)
-    </Annotation>
 </div>
 
 <script>
@@ -83,33 +79,31 @@ const countLabel = (n: number) => `${n} elementos`;
 </script>
 
 <style>
-    .panel-wrap { position: relative; }
-    .panel-note { position: absolute; right: 1rem; bottom: -4.4rem; }
+    .panel-wrap { position: relative; width: 100%; min-width: 0; }
 
-    .tabs { display: flex; gap: .4rem; padding: .7rem .8rem 0; background: var(--paper); border-bottom: 3px solid var(--ink); }
+    .tabs { display: flex; gap: .4rem; padding: .55rem .8rem 0; background: var(--paper); border-bottom: 3px solid var(--ink); }
     .tab {
         margin-bottom: -3px; padding: .3rem .9rem;
-        font-family: var(--px); font-weight: 700; font-size: .85rem; text-transform: uppercase;
+        font-family: var(--tool-title); font-weight: 400; font-size: 1.2rem; text-transform: uppercase;
         color: var(--ink); background: var(--paper-2);
         border: 3px solid var(--ink); border-radius: 7px 7px 0 0;
     }
-    .tab:hover { background: #fff; }
+    .tab:hover { background: var(--paper); }
     .tab[aria-selected="true"] { background: var(--ink); color: var(--paper); }
 
-    .list { display: grid; gap: .55rem; padding: .8rem; min-height: 300px; align-content: start; }
+    .list { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: .55rem; padding: .8rem; height: 23rem; }
+    @media (max-width: 700px) { .list { height: 16rem; } }
 
     .statusbar {
         display: flex; justify-content: space-between; align-items: center; padding: .4rem .8rem;
         border-top: 3px solid var(--ink); background: var(--paper-2);
         font-family: var(--silk); font-size: .66rem; letter-spacing: .05em; text-transform: uppercase;
     }
+    @media(max-width:700px) { .tab { min-height: 44px; flex: 1; padding-inline: .35rem; } .tabs { gap: .3rem; padding-inline: .6rem; } .statusbar { font-size: .5rem; } }
     .led {
         display: inline-block; width: 9px; height: 9px; margin-right: .5rem;
         background: var(--bg); border: 2px solid var(--ink);
         animation: blink 1.6s steps(2) infinite;
     }
 
-    @media (max-width: 980px) {
-        .panel-note { position: static; margin-top: 1rem; }
-    }
 </style>

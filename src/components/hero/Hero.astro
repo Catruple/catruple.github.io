@@ -2,28 +2,29 @@
 /** Portada: titular, llamado a la acción y panel de control. */
 import Container from '@/components/ui/Container.astro';
 import Button from '@/components/ui/Button.astro';
-import Annotation from '@/components/ui/Annotation.astro';
 import ControlPanel from './ControlPanel.astro';
 import { SITE, SECTION_IDS } from '@/config/site';
 ---
 
 <Container as="section" class="hero">
     <div>
-        <span class="sheet-tag">PLANO Nº 001 · REV 0.4 · BORRADOR</span>
         <h1>
-            Infraestructura <span class="hl">y herramientas</span> sin <span class="scr"
-                >rodeos.<svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"
-                    ><path vector-effect="non-scaling-stroke" d="M2 9 C 30 2, 60 13, 100 7 S 170 3, 198 8"></path></svg
-                ></span
-            >
+            Deja de pagar.<br /><span class="software-line"><span>Software</span> <span class="hl">gratis.</span></span>
         </h1>
-        <div class="dim"><span>SIN RELLENO · SIN PLANTILLAS · SIN PERMISO</span></div>
+        <div class="dim"><span>HERRAMIENTAS GRATIS · SIN SUSCRIPCIONES</span></div>
         <p class="lead">{SITE.description}</p>
 
         <div class="actions">
-            <Button href={`#${SECTION_IDS.catalog}`} variant="primary">Explorar utilidades</Button>
+            <div class="primary-action">
+                <Button href={`#${SECTION_IDS.catalog}`} variant="primary">Explorar utilidades</Button>
+                <span class="start-here">
+                    <svg viewBox="0 0 140 90" aria-hidden="true">
+                        <path d="M130 78 C100 82 48 72 34 48 C27 36 30 20 39 9 M39 9 L20 18 M39 9 L44 30" />
+                    </svg>
+                    <span>empieza por acá</span>
+                </span>
+            </div>
             <Button href={SITE.github} target="_blank" rel="noopener">GitHub oficial</Button>
-            <Annotation class="start-here" flip tilt={-4}>empieza por acá</Annotation>
         </div>
     </div>
 
@@ -32,27 +33,18 @@ import { SITE, SECTION_IDS } from '@/config/site';
 
 <style>
     .hero {
-        display: grid; grid-template-columns: 1.12fr 1fr; gap: 3.5rem; align-items: center;
-        padding-top: 4rem; padding-bottom: 2rem;
+        display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 3.5rem; align-items: center;
+        padding-top: 4rem; padding-bottom: 3.5rem;
     }
 
-    .sheet-tag {
-        display: inline-flex; align-items: center; gap: .6rem; margin-bottom: 1.4rem; padding: .3rem .7rem;
-        font-family: var(--silk); font-size: .72rem; letter-spacing: .08em;
-        color: rgb(var(--fg-rgb) / .85); border: 2px dashed rgb(var(--fg-rgb) / .7);
-    }
-    .sheet-tag::before {
-        content: ""; width: 9px; height: 9px;
-        background: var(--acc); border: 1px solid var(--ink);
-        animation: blink 1.2s steps(2) infinite;
-    }
 
     h1 {
         margin: 0 0 1rem; text-transform: uppercase; overflow-wrap: break-word;
-        font-family: var(--px); font-weight: 700; line-height: 1.02; letter-spacing: -.01em;
-        font-size: clamp(2rem, 4.4vw, 3.9rem);
+        font-family: var(--tool-title); font-weight: 400; line-height: 1.02; letter-spacing: -.01em;
+        font-size: clamp(2.6rem, 5.2vw, 4.6rem);
         color: rgb(var(--fg-rgb)); text-shadow: 4px 4px 0 var(--sh);
     }
+    .software-line { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: .2em; }
     .hl {
         display: inline-block; padding: 0 .2em;
         color: var(--ink); text-shadow: none; background: var(--acc);
@@ -73,11 +65,35 @@ import { SITE, SECTION_IDS } from '@/config/site';
     .dim::before { border-left: 1px solid currentColor; }
     .dim::after { border-right: 1px solid currentColor; }
 
-    .lead { margin: 0 0 1.8rem; max-width: 34rem; font-size: 1.15rem; color: rgb(var(--fg-rgb) / .92); }
-    .actions { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem; }
-    .start-here { margin-left: .4rem; }
+    .lead { margin: 0 0 1.8rem; max-width: 34rem; font-family: var(--description); font-weight: 400; font-size: 1.25rem; line-height: 1.5; letter-spacing: .015em; color: rgb(var(--fg-rgb) / .92); }
+    .actions { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1rem; }
+    .primary-action { position: relative; display: flex; margin-bottom: 5.5rem; }
+    .start-here {
+        position: absolute; top: calc(100% + .6rem); left: .5rem;
+        display: flex; align-items: flex-end; gap: .75rem;
+        color: var(--note); font-family: var(--hand); font-size: 1.75rem;
+        font-weight: 700; line-height: 1; white-space: nowrap;
+    }
+    .start-here svg {
+        width: 110px; height: 76px; flex-shrink: 0;
+        fill: none; stroke: currentColor; stroke-width: 3;
+        stroke-linecap: round; stroke-linejoin: round;
+    }
+    .start-here span { padding-bottom: .1rem; transform: rotate(-4deg); }
 
     @media (max-width: 980px) {
         .hero { grid-template-columns: 1fr; gap: 4rem; padding-top: 2.5rem; }
     }
+@media (max-width: 700px) {
+ .hero { padding-top: 1.8rem; padding-bottom: 2.5rem; gap: 1.5rem; }
+ h1 { font-size: clamp(2.25rem, 9.7vw, 3.8rem); text-shadow: 3px 3px 0 var(--sh); }
+ .dim { font-size: .55rem; letter-spacing: .02em; text-align: center; }
+ .dim span { max-width: 85%; }
+ .lead { font-size: 1.2rem; margin-bottom: 1.3rem; }
+ .actions { display: grid; grid-template-columns: 1.2fr 1fr; gap: .65rem; padding-bottom: 4.5rem; }
+ .primary-action { margin-bottom: 0; min-width: 0; }
+ .actions :global(.btn) { width: 100%; min-height: 48px; padding: .55rem .4rem; justify-content: center; font-size: 1.1rem; }
+ .start-here { left: 0; gap: .4rem; font-size: 1.4rem; }
+ .start-here svg { width: 65px; height: 52px; }
+}
 </style>

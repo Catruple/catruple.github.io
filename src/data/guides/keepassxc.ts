@@ -1,0 +1,6 @@
+import type { Guide } from './_types';
+export default {
+  "title": "Cómo usar · KeePassXC",
+  "windowTitle": "Ayuda.txt",
+  "body": "## Crear tu bóveda\n1. Instala KeePassXC desde las [publicaciones oficiales](https://github.com/keepassxreboot/keepassxc/releases).\n2. Abre la aplicación y elige **Crear nueva base de datos**.\n3. Ponle un nombre y sigue el asistente. Elige una contraseña maestra larga, única y que puedas recordar.\n4. Guarda el archivo de la base de datos en una ubicación que reconozcas.\n\n## Guardar una contraseña\n1. Añade una entrada con el nombre del servicio, usuario, contraseña y dirección web.\n2. Usa el generador para crear una contraseña distinta para cada cuenta.\n3. Guarda la base de datos después de los cambios y bloquéala cuando termines.\n\n## Copias de seguridad\nMantén una copia segura del archivo de la base de datos. Si usas un archivo de clave adicional, respáldalo también y guárdalo separado. **Si pierdes la contraseña maestra o una clave necesaria, no hay recuperación de cuenta que abra la bóveda.**\n\nLa integración con el navegador es opcional y requiere la extensión oficial KeePassXC-Browser.\n\n[Guía oficial](https://keepassxc.org/docs/KeePassXC_GettingStarted)\n"
+} satisfies Guide;

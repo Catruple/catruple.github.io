@@ -1,5 +1,6 @@
 ---
 /** "El taller": repositorio de proyectos con filtros y búsqueda. */
+import Button from '@/components/ui/Button.astro';
 import Container from '@/components/ui/Container.astro';
 import FilterChips from './FilterChips.astro';
 import ProjectCard from './ProjectCard.astro';
@@ -15,15 +16,20 @@ const projectsWithGuide = PROJECT_LIST.filter((p): p is typeof p & { guide: stri
     <div class="head">
         <div>
             <span class="kicker">HOJA 02 / REPOSITORIO</span>
-            <h2>Utilidades &amp; proyectos <em>(el taller)</em></h2>
+            <h2>Utilidades &amp; proyectos</h2>
         </div>
         <FilterChips />
     </div>
     <p class="count" data-catalog-count aria-live="polite"></p>
 
-    <div class="grid">
-        {PROJECTS.map((project) => <ProjectCard project={project} />)}
-        <SketchCard data-catalog-sketch>aquí va otra herramienta… cuando la termine</SketchCard>
+    <div class="grid" id="catalog-grid">
+        {PROJECTS.map((project, index) => <ProjectCard project={project} initialHidden={index >= 10} />)}
+        <SketchCard data-catalog-sketch hidden>aquí va otra herramienta… cuando la termine</SketchCard>
+    </div>
+
+    <div class="load-more" data-catalog-more>
+        <Button data-show-less aria-controls="catalog-grid" hidden>Ver menos</Button>
+        <Button variant="primary" data-load-more aria-controls="catalog-grid">Ver más</Button>
     </div>
 
     <p class="empty" data-catalog-empty hidden>No encontré nada con eso. El plano sigue en blanco ✎</p>
@@ -33,7 +39,7 @@ const projectsWithGuide = PROJECT_LIST.filter((p): p is typeof p & { guide: stri
 
 <script>
     import { ALL_CATEGORY } from '@/data/categories';
-    import { subscribe } from '@/scripts/catalog-store';
+    import { subscribe, showMore, showLess } from '@/scripts/catalog-store';
 
     const root = document.querySelector<HTMLElement>('[data-catalog]');
 
@@ -43,42 +49,82 @@ const projectsWithGuide = PROJECT_LIST.filter((p): p is typeof p & { guide: stri
         const empty = root.querySelector<HTMLElement>('[data-catalog-empty]');
         const count = root.querySelector<HTMLElement>('[data-catalog-count]');
 
-        subscribe(({ filter, query }) => {
-            let shown = 0;
-            cards.forEach((card) => {
-                const matchesFilter = filter === ALL_CATEGORY || card.dataset.category === filter;
-                const matchesQuery = !query || (card.textContent ?? '').toLowerCase().includes(query);
-                card.hidden = !(matchesFilter && matchesQuery);
-                if (!card.hidden) shown++;
-            });
-            if (sketch) sketch.hidden = filter !== ALL_CATEGORY || !!query;
-            if (empty) empty.hidden = shown > 0;
-            if (count) count.textContent = `Mostrando ${shown} de ${cards.length} planos`;
+        const more = root.querySelector<HTMLElement>('[data-catalog-more]');
+        const loadButton = root.querySelector<HTMLButtonElement>('[data-load-more]');
+        const lessButton = root.querySelector<HTMLButtonElement>('[data-show-less]');
+        let render = () => {};
+
+        subscribe(({ filter, query, visibleCount }) => {
+            render = () => {
+                const matches = cards.filter(card =>
+                    (filter === ALL_CATEGORY || card.dataset.category === filter) &&
+                    (!query || (card.textContent ?? '').toLowerCase().includes(query)),
+                );
+                const visible = new Set(matches.slice(0, visibleCount));
+                cards.forEach(card => { card.hidden = !visible.has(card); });
+                if (sketch) sketch.hidden = filter !== ALL_CATEGORY || !!query || visible.size < matches.length;
+                if (empty) empty.hidden = matches.length > 0;
+                if (more) more.hidden = matches.length <= 10;
+                if (loadButton) loadButton.hidden = visible.size >= matches.length;
+                if (lessButton) lessButton.hidden = visible.size <= 10;
+                if (count) {
+                    count.dataset.total = String(matches.length);
+                    count.textContent = document.documentElement.lang === 'en'
+                        ? `Showing ${visible.size} of ${matches.length} tools`
+                        : `Mostrando ${visible.size} de ${matches.length} planos`;
+                }
+            };
+            render();
         });
+        loadButton?.addEventListener('click', () => {
+            const previouslyVisible = cards.filter(card => !card.hidden).length;
+            showMore();
+            const firstNew = cards.filter(card => !card.hidden)[previouslyVisible];
+            if (firstNew) {
+                firstNew.setAttribute('tabindex', '-1');
+                firstNew.focus({ preventScroll: true });
+                firstNew.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+        lessButton?.addEventListener('click', () => {
+            showLess();
+            const heading = root.querySelector('h2');
+            heading?.setAttribute('tabindex', '-1');
+            heading?.focus({ preventScroll: true });
+            root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        document.addEventListener('catruple:language', () => render());
     }
 </script>
 
 <style>
     .catalog { scroll-margin-top: 7rem; padding-top: 1rem; }
 
-    .head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.2rem; margin-bottom: 1rem; }
+    .head { display: flex; flex-direction: column; align-items: flex-start; gap: 1.2rem; margin-bottom: 1rem; }
     .kicker {
         display: block; margin-bottom: .5rem;
         font-family: var(--silk); font-size: .72rem; letter-spacing: .12em; color: rgb(var(--fg-rgb) / .85);
     }
     h2 {
-        margin: 0; font-family: var(--px); font-weight: 700; line-height: 1.1; text-transform: uppercase;
-        font-size: clamp(1.6rem, 3.2vw, 2.6rem); color: rgb(var(--fg-rgb)); text-shadow: 3px 3px 0 var(--sh);
+        margin: 0; font-family: var(--tool-title); font-weight: 400; line-height: 1.1; text-transform: uppercase;
+        font-size: clamp(2rem, 3.8vw, 3rem); color: rgb(var(--fg-rgb)); text-shadow: 3px 3px 0 var(--sh);
     }
-    h2 em {
-        display: inline-block; margin-left: .4rem; transform: rotate(-3deg);
-        font-style: normal; font-family: var(--hand); text-transform: none; font-size: 1.3em;
-        color: var(--note); text-shadow: none;
-    }
+
 
     .count { margin: 0 0 1.6rem; font-family: var(--silk); font-size: .66rem; letter-spacing: .1em; color: rgb(var(--fg-rgb) / .85); }
 
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 2.6rem 2.2rem; padding-top: .8rem; }
 
+    .load-more { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 1rem; margin: 2.4rem 0 1rem; }
+    .load-more :global(.btn) { min-width: 180px; justify-content: center; padding: .85rem 2rem; font-size: 1.6rem; }
+    .grid :global(.card) { scroll-margin-top: 7rem; }
+
     .empty { margin: 3rem 0; text-align: center; font-family: var(--hand); font-size: 1.8rem; color: var(--note); }
+@media (max-width: 700px) {
+ .grid { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+ .catalog { scroll-margin-top: 8rem; }
+ .grid :global(.card) { scroll-margin-top: 8rem; }
+ .kicker { font-size: .6rem; }
+ .load-more :global(.btn) { min-height: 48px; min-width: 140px; padding: .7rem 1.2rem; }
+}
 </style>

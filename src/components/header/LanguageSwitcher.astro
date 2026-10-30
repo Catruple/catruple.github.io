@@ -1,0 +1,8 @@
+---
+import Button from '@/components/ui/Button.astro';
+---
+<Button size="sm" data-language-toggle aria-label="Switch to English" title="Switch to English">EN</Button>
+<script>
+    import { initLanguage } from '@/scripts/language';
+    initLanguage();
+</script>

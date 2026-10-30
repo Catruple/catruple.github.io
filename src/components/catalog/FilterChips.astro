@@ -32,10 +32,11 @@ import { ALL_CATEGORY, CATEGORIES } from '@/data/categories';
     .chips { display: flex; flex-wrap: wrap; gap: .6rem; }
     .chip {
         padding: .35rem .8rem;
-        font-family: var(--silk); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase;
+        font-family: var(--tool-title); font-weight: 400; font-size: 1.15rem; letter-spacing: .06em; text-transform: uppercase;
         color: var(--ink); background: var(--paper);
         border: 3px solid var(--ink); border-radius: 20px; box-shadow: 3px 3px 0 var(--ink);
     }
     .chip:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--ink); }
     .chip[aria-pressed="true"] { background: var(--acc); transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
+@media (max-width: 700px) { .chips { gap: .6rem; } .chip { min-height: 44px; padding: .35rem .7rem; font-size: 1.05rem; } }
 </style>

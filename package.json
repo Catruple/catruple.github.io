@@ -10,7 +10,8 @@
     "check": "astro check",
     "astro": "astro",
     "guide": "node tools/guide.ts",
-    "guide:remove": "node tools/guide.ts --remove"
+    "guide:remove": "node tools/guide.ts --remove",
+    "check:links": "python3 tools/check-links.py"
   },
   "dependencies": {
     "astro": "^7.4.2"

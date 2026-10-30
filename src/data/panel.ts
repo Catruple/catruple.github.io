@@ -1,13 +1,11 @@
-import type { ProjectId } from './projects';
+import { PROJECT_LIST, type ProjectId } from './projects';
 import type { IconName } from '@/lib/pixel-icons';
 
-/** Contenido del "Panel de control" del hero, agrupado por pestaña. */
 export interface PanelRow {
   icon: IconName;
   title: string;
   description: string;
   meta: string;
-  /** Tarjeta del repositorio a la que lleva la fila. */
   project: ProjectId;
 }
 
@@ -17,32 +15,46 @@ export interface PanelTab {
   rows: PanelRow[];
 }
 
+/** Reuse catalog identity and version so panel links cannot become stale. */
+const row = (id: ProjectId, description: string): PanelRow => {
+  const project = PROJECT_LIST.find(project => project.id === id);
+  if (!project) throw new Error(`Unknown panel project: ${id}`);
+  const shortTitles: Partial<Record<ProjectId, string>> = { filmcraft: 'FilmCraft', vectorcraft: 'VectorCraft', figcraft: 'FigCraft', localsend: 'LocalSend', godot: 'Godot' };
+  return { icon: project.icon, title: shortTitles[id] ?? project.title, meta: project.meta, project: id, description };
+};
+
+/** GitHub star counts checked on 2026-10-27; curated snapshot, not a live ranking. */
+export const POPULARITY_SNAPSHOT = [
+  { project: 'powertoys', stars: 140053 },
+  { project: 'godot', stars: 119165 },
+  { project: 'terminal', stars: 105254 },
+] as const;
+
 export const PANEL_TABS: PanelTab[] = [
   {
-    id: 'activos',
-    label: 'Activos',
+    id: 'activos', label: 'Activos',
+    // A practical starting selection, rather than activity or download telemetry.
     rows: [
-      { icon: 'win', title: 'Windows Modded (DELTA Core)', description: 'Optimización extrema y depuración de bloatware para gaming.', meta: 'v1.2 Stable', project: 'delta' },
-      { icon: 'term', title: 'Catruple Toolkit & Utils', description: 'Scripts rápidos y utilidades de mantenimiento de sistemas.', meta: 'Utility', project: 'debloater' },
-      { icon: 'folder', title: 'Archivo Histórico de Marca', description: 'Repositorio de proyectos independientes y marcas de prueba.', meta: 'Archive', project: 'labs' },
+      row('rufus', 'Prepara un USB para instalar Windows o Linux.'),
+      row('powertoys', 'Organiza ventanas y mejora tus atajos de Windows.'),
+      row('localsend', 'Pasa archivos entre tu PC y tu móvil sin nube.'),
     ],
   },
   {
-    id: 'populares',
-    label: 'Populares',
+    id: 'populares', label: 'Populares',
     rows: [
-      { icon: 'cursor', title: 'Auto-Clicker & Macros', description: 'Automatización ligera de tareas repetitivas para gaming.', meta: 'v2.1', project: 'autoclicker' },
-      { icon: 'term', title: 'PowerShell Debloater', description: 'Limpia Windows de apps preinstaladas y basura innecesaria.', meta: 'Open Source', project: 'debloater' },
-      { icon: 'win', title: 'Windows DELTA Edition', description: 'Sin telemetría ni servicios de más, más FPS en juegos.', meta: 'Sistema', project: 'delta' },
+      row('powertoys', 'Organiza ventanas, renombra archivos y personaliza atajos.'),
+      row('godot', 'Crea juegos 2D y 3D sin pagar regalías.'),
+      row('terminal', 'Organiza tus consolas con pestañas, paneles y perfiles.'),
     ],
   },
   {
-    id: 'nuevos',
-    label: 'Nuevos',
+    id: 'nuevos', label: 'Nuevos',
+    // Newest additions to Catruple first, not newest upstream software releases.
     rows: [
-      { icon: 'gear', title: 'Configs & Dotfiles', description: 'Perfiles de rendimiento, OBS Studio, monitor y red.', meta: 'Config', project: 'configs' },
-      { icon: 'browser', title: 'Catruple.com Portal', description: 'El código fuente de este mismo sitio.', meta: 'Web', project: 'portal' },
-      { icon: 'flask', title: 'Prototipos & Juegos Viejos', description: 'Experimentos y proyectos descontinuados.', meta: 'Labs', project: 'labs' },
+      row('filmcraft', 'Edita vídeo con pistas, transiciones y ajustes de color.'),
+      row('vectorcraft', 'Dibuja ilustraciones con curvas, formas y efectos editables.'),
+      row('figcraft', 'Diseña interfaces con componentes y prototipos.'),
     ],
   },
 ];

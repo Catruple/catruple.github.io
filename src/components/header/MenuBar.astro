@@ -3,8 +3,8 @@
 import Brand from './Brand.astro';
 import MainNav from './MainNav.astro';
 import SearchBox from './SearchBox.astro';
-import ThemeSwitcher from './ThemeSwitcher.astro';
-import LoginButton from './LoginButton.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import DarkMode from './DarkMode.astro';
 import Clock from './Clock.astro';
 ---
 
@@ -12,21 +12,27 @@ import Clock from './Clock.astro';
     <Brand />
     <MainNav class="nav" />
     <span class="spacer"></span>
-    <SearchBox class="search-slot desktop-only" />
-    <ThemeSwitcher />
-    <LoginButton />
+    <SearchBox class="search-slot" />
+    <LanguageSwitcher />
+    <DarkMode />
     <Clock class="desktop-only" />
 </header>
 
 <style>
     .menubar {
         position: sticky; top: 0; z-index: 100;
-        display: flex; align-items: center; gap: .9rem;
-        padding: .4rem 1.2rem .4rem 1.4rem;
+        display: flex; align-items: center; gap: .7rem;
+        padding: .25rem 1.2rem .25rem 1.4rem;
         background: var(--paper); color: var(--ink);
         border-bottom: 3px solid var(--ink);
         box-shadow: 0 5px 0 rgb(0 0 0 / .28);
     }
+    .menubar :global([data-language-toggle]),
+    .menubar :global([data-dark-mode]) {
+        width: 34px; height: 34px; min-width: 34px; font-size: 1.1rem;
+        padding: 0; justify-content: center; align-items: center;
+    }
+
     /* Ninguna pieza se aplasta; solo el buscador cede algo de ancho. */
     .menubar > :global(*) { flex-shrink: 0; }
     .menubar > .search-slot { flex: 0 1 230px; min-width: 150px; }
@@ -40,4 +46,10 @@ import Clock from './Clock.astro';
     @media (max-width: 860px) {
         .menubar .desktop-only { display: none; }
     }
+@media (max-width: 700px) {
+ .menubar { padding: .45rem .75rem .2rem; gap: .35rem .5rem; }
+ .menubar :global([data-language-toggle]), .menubar :global([data-dark-mode]) { width: 44px; height: 44px; min-width: 44px; }
+ .nav { min-width: 0; }
+ .menubar > .search-slot { order: 6; flex: 1 0 100%; width: 100%; min-width: 0; margin-bottom: .35rem; }
+}
 </style>

@@ -11,6 +11,10 @@
 
     --px: "Pixelify Sans", "Silkscreen", ui-monospace, Menlo, Consolas, monospace;
     --silk: "Silkscreen", "Pixelify Sans", ui-monospace, Menlo, monospace;
+    --tool-title: "Jersey 10", "Courier New", monospace;
+    --terminal: "VT323", "Courier New", monospace;
+    --description: "Jersey 15", "Courier New", monospace;
+    --body: "IBM Plex Mono", "Courier New", monospace;
     --hand: "Caveat", "Comic Sans MS", cursive;
 
     --container: 1320px;

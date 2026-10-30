@@ -1,6 +1,7 @@
 ---
 /** Documento HTML: <head>, fuentes, estilos globales y tema guardado. */
 import '@/styles/global.css';
+import '@/styles/fonts.css';
 import { SITE, THEME_STORAGE_KEY } from '@/config/site';
 import { DEFAULT_THEME } from '@/data/themes';
 import { themeCss } from '@/lib/theme-css';
@@ -27,18 +28,15 @@ const { title = SITE.title, description = SITE.description } = Astro.props;
         <!-- Aplica el color guardado antes de pintar, para evitar un parpadeo. -->
         <script is:inline define:vars={{ storageKey: THEME_STORAGE_KEY }}>
             try {
+                var mode = localStorage.getItem('catruple-mode');
+                document.documentElement.dataset.mode = mode ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                 var saved = localStorage.getItem(storageKey);
                 if (saved) document.documentElement.setAttribute('data-theme', saved);
             } catch (e) {}
         </script>
         <Fragment set:html={`<style>${themeCss()}</style>`} />
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Pixelify+Sans:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap"
-            rel="stylesheet"
-        />
+
     </head>
     <body>
         <slot />

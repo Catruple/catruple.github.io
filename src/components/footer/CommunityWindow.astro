@@ -1,0 +1,21 @@
+---
+import Window from '@/components/ui/Window.astro';
+import Button from '@/components/ui/Button.astro';
+---
+<Window title="COMUNIDAD.EXE">
+    <div class="body">
+        <span class="tag">EL CATÁLOGO SIGUE CRECIENDO</span>
+        <h3>¿Falta una joya?</h3>
+        <p>Recomienda una herramienta gratis y de código abierto, o ayúdanos a corregir una guía. Las buenas ideas también se comparten.</p>
+        <Button href="https://github.com/Odruu/Catruple/issues/new" target="_blank" rel="noopener noreferrer">Proponer herramienta ↗</Button>
+        <small>Las propuestas se envían a GitHub.</small>
+    </div>
+</Window>
+<style>
+ .body { padding: 1.3rem; }
+ .tag { font: .6rem/1.5 var(--silk); }
+ h3 { font: 400 2.3rem/1.1 var(--tool-title); margin: .6rem 0; }
+ p { font: 1.25rem/1.4 var(--description); margin: 0 0 1.2rem; }
+ small { display: block; font: 1rem/1.4 var(--description); margin-top: .8rem; }
+ @media(max-width:700px) { .body :global(.btn) { min-height: 44px; font-size: 1.15rem; } }
+</style>

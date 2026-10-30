@@ -30,13 +30,20 @@ const { title, items } = Astro.props;
         box-shadow: 6px 6px 0 rgb(0 0 0 / .35);
         font-family: var(--hand); font-size: 1.45rem; line-height: 29px;
     }
+    :global(html[data-mode="dark"]) .note {
+        color: #f2ead5;
+        background-color: #292c37;
+        background-image: repeating-linear-gradient(transparent 0 28px, rgb(180 197 240 / .22) 28px 29px);
+    }
+    :global(html[data-mode="dark"]) .done { opacity: .85; }
+    :global(html[data-mode="dark"]) small { opacity: .9; }
     /* cinta adhesiva */
     .note::before {
         content: ""; position: absolute; top: -14px; left: 50%; width: 80px; height: 24px;
         transform: translateX(-50%) rotate(2deg);
         background: rgb(255 210 63 / .75); border: 1px dashed rgb(0 0 0 / .25);
     }
-    h4 { margin: 0 0 .2rem; font-size: 1.8rem; line-height: 36px; font-weight: 700; text-decoration: underline wavy #e8454f; text-underline-offset: 6px; }
+    h4 { font-family: var(--tool-title); margin: 0 0 .2rem; font-size: 1.8rem; line-height: 36px; font-weight: 400; text-decoration: underline wavy #e8454f; text-underline-offset: 6px; }
     ul { margin: 0; padding: 0; list-style: none; }
     li { display: flex; align-items: center; gap: .55rem; }
     li::before { content: ""; flex: none; width: .8em; height: .8em; border: 2px solid currentColor; }

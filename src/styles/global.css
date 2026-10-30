@@ -51,3 +51,28 @@ body::before {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     html { scroll-behavior: auto; }
 }
+
+/* Superficies nocturnas, independientes del color elegido en Pantalla. */
+html[data-mode="dark"] {
+    color-scheme: dark;
+    --paper: #20232e;
+    --paper-2: #303544;
+    --ink: #eee9da;
+    --ink-rgb: 238 233 218;
+    --bg: #10192d;
+    --fg-rgb: 238 233 218;
+    --sh: #080b13;
+    --acc: #ffd23f;
+    --note: #ffd23f;
+}
+html[data-mode="dark"] .row,
+html[data-mode="dark"] input { background: var(--paper); color: var(--ink); }
+html[data-mode="dark"] .row:hover { background: var(--ink); color: var(--paper); }
+html[data-mode="dark"] .hl,
+html[data-mode="dark"] .btn.primary { color: #0b0b14; }
+
+/* Visible on cream and dark surfaces, including keyboard navigation. */
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; box-shadow: 0 0 0 6px var(--acc); }
+.skip-link { position: fixed; z-index: 200; top: .5rem; left: 1rem; transform: translateY(-200%); background: var(--acc); color: #0b0b14; padding: .7rem 1rem; font-family: var(--tool-title); font-size: 1.3rem; }
+.skip-link:focus { transform: none; }
+@media(max-width:700px) { #tools, #main-content, #catalog-grid .card { scroll-margin-top: 12rem; } }

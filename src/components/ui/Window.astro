@@ -38,6 +38,8 @@ const { as: Tag = 'div', title, titleId, closeLabel, class: className, ...attrs 
         background-image: repeating-linear-gradient(to bottom, var(--ink) 0 2px, transparent 2px 5px);
     }
     .close { width: 15px; height: 15px; flex: none; padding: 0; border: 2px solid var(--ink); background: var(--paper); }
+    button.close { position: relative; }
+    button.close::after { content: ""; position: absolute; inset: -15px; }
     .win-bar::after { content: ""; width: 15px; flex: none; }
-    .ttl { margin: 0 auto; padding: 0 .7rem; background: var(--paper); font-weight: 700; font-size: .92rem; text-transform: uppercase; letter-spacing: .06em; }
+    .ttl { margin: 0 auto; padding: 0 .7rem; background: var(--paper); font-family: var(--tool-title); font-weight: 400; font-size: 1.25rem; text-transform: uppercase; letter-spacing: .06em; }
 </style>

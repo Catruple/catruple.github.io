@@ -1,13 +1,10 @@
 ---
 import SiteLayout from '@/layouts/SiteLayout.astro';
 import Hero from '@/components/hero/Hero.astro';
-import ConstructionTape from '@/components/decor/ConstructionTape.astro';
 import CatalogSection from '@/components/catalog/CatalogSection.astro';
-import { TAPE_MESSAGES } from '@/data/tape';
 ---
 
 <SiteLayout>
     <Hero />
-    <ConstructionTape messages={TAPE_MESSAGES} />
     <CatalogSection />
 </SiteLayout>

@@ -5,16 +5,16 @@ export const TODOS: { text: string; done?: boolean; aside?: string }[] = [
   { text: 'definir la idea', done: true },
   { text: 'dibujar los planos', done: true },
   { text: 'elegir color de pantalla', done: true },
-  { text: 'conectar los enlaces' },
-  { text: 'terminar el footer', aside: '(← lo estás viendo)' },
-  { text: 'modo oscuro (¿?)' },
+  { text: 'conectar los enlaces', done: true },
+  { text: 'terminar el footer', done: true, aside: '(← lo estás viendo)' },
+  { text: 'modo oscuro', done: true },
 ];
 
 /** Ventana "Avance.exe". */
 export const BUILD_PROGRESS = {
-  label: 'Construyendo catruple.com…',
-  percent: 71,
-  remark: 'faltan cosas',
+  label: 'Catruple listo para explorar.',
+  percent: Math.round(TODOS.filter(item => item.done).length / TODOS.length * 100),
+  remark: 'pendientes completados',
 };
 
 /** Cajetín del plano. `value: null` = se rellena en el navegador con la fecha de hoy. */

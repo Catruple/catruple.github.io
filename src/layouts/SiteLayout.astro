@@ -18,8 +18,9 @@ const props = Astro.props;
 <BaseLayout {...props}>
     <DoodleSprite />
     <BlueprintBackground />
+    <a class="skip-link" href="#main-content">Saltar al contenido</a>
     <MenuBar />
-    <main>
+    <main id="main-content" tabindex="-1">
         <slot />
     </main>
     <SiteFooter />

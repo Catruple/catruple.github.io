@@ -3,7 +3,7 @@ export const SITE = {
   name: 'Catruple.com',
   title: 'Catruple.com — Centro de Herramientas y Sistemas',
   description:
-    'Plataforma centralizada de desarrollos independientes, optimización de sistemas operativos y utilidades de alto rendimiento.',
+    'A la mierda sus suscripciones. Catruple reúne herramientas gratis y de código abierto para tu PC, con guías y enlaces oficiales.',
   lang: 'es',
   locale: 'es-CO',
   author: 'Odruu',

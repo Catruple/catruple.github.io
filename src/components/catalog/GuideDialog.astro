@@ -42,7 +42,7 @@ const { Content } = await render(entry);
     }
     .heading {
         display: inline-block; margin: 0 0 1rem; padding: .2rem .6rem;
-        font-family: var(--px); font-weight: 700; font-size: 1.35rem; line-height: 1.1; text-transform: uppercase;
+        font-family: var(--tool-title); font-weight: 400; font-size: 1.35rem; line-height: 1.1; text-transform: uppercase;
         color: var(--paper); background: var(--ink); box-shadow: 4px 4px 0 var(--acc);
         transform: rotate(-1deg);
     }
@@ -50,4 +50,5 @@ const { Content } = await render(entry);
         display: flex; justify-content: flex-end; margin: 0; padding: .7rem 1.5rem .9rem;
         border-top: 3px solid var(--ink); background: var(--paper-2);
     }
+@media (max-width: 700px) { .body { padding: 1rem; overflow-wrap: anywhere; } .actions { padding: .65rem 1rem; } .actions :global(.btn) { min-height: 44px; } }
 </style>

@@ -1,107 +1,30 @@
 ---
-/**
- * Fondo: plano inclinado en 3D con menús y ventanas sin terminar.
- * Se desliza con el scroll y se inclina con el mouse (salvo con movimiento reducido).
- * El contenido sale de src/data/blueprint.ts.
- */
-import PixelIcon from '@/components/ui/PixelIcon.astro';
-import Dimension from './Dimension.astro';
-import SketchMenuBar from './SketchMenuBar.astro';
-import SketchWindow from './SketchWindow.astro';
-import SketchRuler from './SketchRuler.astro';
-import SketchScrollbar from './SketchScrollbar.astro';
-import SketchMenu from './SketchMenu.astro';
-import SketchPuzzle from './SketchPuzzle.astro';
-import SketchKeypad from './SketchKeypad.astro';
-import SketchRadioList from './SketchRadioList.astro';
-import BigType from './BigType.astro';
-import Doodle from './Doodle.astro';
-import HandNote from './HandNote.astro';
-import { place } from '@/lib/placement';
-import {
-  BIG_ICONS,
-  BIG_TYPE,
-  DIMENSIONS,
-  DOODLES,
-  DRAFT_WINDOW,
-  DROPDOWN_MENU,
-  HAND_NOTES,
-  KEYPAD,
-  MENU_BAR,
-  PROFILES,
-  PUZZLE,
-} from '@/data/blueprint';
+/** Fondo de cuadrícula de plano, sin bocetos decorativos. */
 ---
 
 <div class="bg" aria-hidden="true">
-    <div class="plane" data-blueprint-plane>
-        <div class="stage">
-            {DIMENSIONS.map(({ orientation, label, ...box }) => <Dimension orientation={orientation} label={label} box={box} />)}
-
-            <SketchMenuBar items={MENU_BAR.items} box={MENU_BAR.box} />
-
-            <SketchWindow title={DRAFT_WINDOW.title} box={DRAFT_WINDOW.box}>
-                <SketchRuler marks={DRAFT_WINDOW.rulerMarks} />
-                <SketchScrollbar />
-                {DRAFT_WINDOW.scribbles.map((box) => <Doodle name="squiggle" box={box} />)}
-            </SketchWindow>
-
-            <SketchMenu items={DROPDOWN_MENU.items} selected={DROPDOWN_MENU.selected} box={DROPDOWN_MENU.box} />
-
-            <SketchWindow title={PUZZLE.title} box={PUZZLE.box} done>
-                <SketchPuzzle tiles={PUZZLE.tiles} />
-            </SketchWindow>
-
-            <SketchKeypad keys={KEYPAD.keys} box={KEYPAD.box} />
-
-            <SketchWindow title={PROFILES.title} box={PROFILES.box}>
-                <SketchRadioList options={PROFILES.options} selected={PROFILES.selected} />
-            </SketchWindow>
-
-            <BigType lines={BIG_TYPE.lines} box={BIG_TYPE.box} />
-
-            {BIG_ICONS.map(({ icon, x, y, size }) => <PixelIcon name={icon} class="big-icon" style={place({ x, y, w: size })} />)}
-
-            {DOODLES.map(({ name, accent, ...box }) => <Doodle name={name} box={box} accent={accent} />)}
-
-            {HAND_NOTES.map((note) => <HandNote {...note} />)}
-        </div>
-    </div>
+    <div class="plane" data-blueprint-plane></div>
 </div>
 
 <script>
     const plane = document.querySelector<HTMLElement>('[data-blueprint-plane]');
+    const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+    let queued = false;
 
-    if (plane && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        let scrollY = 0;
-        let mouseX = 0;
-        let mouseY = 0;
-        let queued = false;
-
-        const paint = () => {
-            plane.style.setProperty('--sy', String(scrollY));
-            plane.style.setProperty('--mx', mouseX.toFixed(3));
-            plane.style.setProperty('--my', mouseY.toFixed(3));
-            queued = false;
-        };
-        const request = () => {
-            if (queued) return;
-            queued = true;
-            requestAnimationFrame(paint);
-        };
-
-        addEventListener('scroll', () => { scrollY = window.scrollY; request(); }, { passive: true });
-        addEventListener(
-            'pointermove',
-            (e) => {
-                mouseX = (e.clientX / innerWidth - 0.5) * 2;
-                mouseY = (e.clientY / innerHeight - 0.5) * 2;
-                request();
-            },
-            { passive: true },
-        );
-        request();
-    }
+    const paint = () => {
+        queued = false;
+        // Move only the infinitely repeating texture. The surface stays in
+        // place, with no wrapping of the offset or interpolated reset.
+        plane?.style.setProperty('--grid-offset', `${motionPreference.matches ? 0 : -window.scrollY * .4}px`);
+    };
+    const requestPaint = () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(paint);
+    };
+    addEventListener('scroll', requestPaint, { passive: true });
+    motionPreference.addEventListener('change', requestPaint);
+    paint();
 </script>
 
 <style>
@@ -121,26 +44,18 @@ import {
         position: absolute; left: 50%; top: 50%;
         width: 7000px; height: 5200px; margin: -2600px 0 0 -3500px;
         transform:
-            rotateX(calc(56deg + var(--my, 0) * 2deg))
-            rotateZ(calc(-24deg + var(--mx, 0) * 2deg))
-            translateY(calc(280px + var(--sy, 0) * -.4px));
-        transition: transform .25s ease-out;
-        will-change: transform;
+            rotateX(56deg)
+            rotateZ(-24deg)
+            translateY(280px);
         background-image:
             linear-gradient(rgb(var(--fg-rgb) / .2) 3px, transparent 3px),
             linear-gradient(90deg, rgb(var(--fg-rgb) / .2) 3px, transparent 3px),
             linear-gradient(rgb(var(--fg-rgb) / .07) 2px, transparent 2px),
             linear-gradient(90deg, rgb(var(--fg-rgb) / .07) 2px, transparent 2px);
+        background-repeat: repeat;
+        background-position: 0 var(--grid-offset, 0px);
         background-size: 300px 300px, 300px 300px, 30px 30px, 30px 30px;
     }
-    .stage {
-        position: absolute; left: 50%; top: 50%;
-        width: 3000px; height: 2000px; margin: -1000px 0 0 -1500px;
-        color: rgb(var(--fg-rgb) / .34);
-        font-family: var(--silk);
-    }
-    .big-icon { color: rgb(var(--fg-rgb) / .3); }
-
     @media (max-width: 700px) {
         .plane { opacity: .85; }
     }

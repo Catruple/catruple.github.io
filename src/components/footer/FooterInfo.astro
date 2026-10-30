@@ -1,0 +1,49 @@
+---
+import LegalDialogs from './LegalDialogs.astro';
+const repo = 'https://github.com/Odruu/Catruple';
+---
+<section class="info" aria-label="Información de Catruple">
+    <div class="columns">
+        <div class="about">
+            <h3>CATRUPLE.COM</h3>
+            <p>Buen software. Cero suscripciones. Un catálogo independiente para descubrir herramientas gratis y de código abierto.</p>
+            <a href="#tools">Volver al catálogo ↑</a>
+        </div>
+        <nav aria-label="Recursos">
+            <h3>Recursos</h3>
+            <a href={repo} target="_blank" rel="noopener noreferrer">Código de la web ↗</a>
+            <a href={`${repo}/issues/new`} target="_blank" rel="noopener noreferrer">Sugerir una herramienta ↗</a>
+            <a href={`${repo}/issues`} target="_blank" rel="noopener noreferrer">Avisar de un enlace roto ↗</a>
+        </nav>
+        <div>
+            <h3>Antes de instalar</h3>
+            <p>Comprueba la compatibilidad y lee las instrucciones del proyecto. Haz una copia de seguridad antes de ejecutar scripts o cambiar ajustes del sistema.</p>
+        </div>
+    </div>
+    <div class="fineprint">
+        <nav class="legal-links" aria-label="Información legal">
+            <button data-modal-open="legal-notice" aria-haspopup="dialog">Aviso legal</button>
+            <button data-modal-open="privacy-notice" aria-haspopup="dialog">Privacidad</button>
+        </nav>
+        <p class="credit">Hecho por Odruu · Software de sus comunidades.</p>
+    </div>
+</section>
+<LegalDialogs />
+<style>
+    .legal-links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: .75rem; }
+    .legal-links button { color: inherit; background: transparent; border: 0; padding: .35rem 0; min-height: 44px; font: 1.2rem var(--tool-title); text-decoration: underline; text-underline-offset: 4px; }
+    .legal-links button:hover { text-decoration-thickness: 3px; }
+    .info { grid-column: 1 / -1; background: var(--paper); color: var(--ink); border: 3px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); }
+    .columns { display: grid; grid-template-columns: 1.3fr 1fr 1.2fr; gap: 2.5rem; padding: 1.6rem 1.8rem; }
+    h3 { font: 400 1.55rem/1.15 var(--tool-title); text-transform: uppercase; margin: 0 0 .65rem; }
+    p, a { font: 400 1.12rem/1.45 var(--description); }
+    p { margin: 0 0 .6rem; }
+    nav a { display: block; margin-bottom: .45rem; }
+    a { color: inherit; text-underline-offset: 4px; }
+    a:hover { text-decoration-thickness: 3px; }
+    .fineprint { border-top: 2px dashed var(--ink); padding: 1rem 1.8rem; }
+    .credit { font-size: 1rem; line-height: 1.5; }
+    .credit { margin: .7rem 0 0; opacity: .8; }
+    @media(max-width: 800px) { .columns { grid-template-columns: 1fr; gap: 1.5rem; } }
+@media (max-width: 700px) { .columns { padding: 1.2rem; gap: 1.2rem; } .fineprint { padding: 1rem 1.2rem; } nav a, .about a { display: flex; align-items: center; min-height: 44px; margin-bottom: 0; } }
+</style>

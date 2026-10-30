@@ -1,0 +1,187 @@
+{
+  "rufus": {
+    "url": "https://github.com/pbatard/rufus/releases/tag/v4.15",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "powertoys": {
+    "url": "https://github.com/microsoft/PowerToys/releases/tag/v0.102.2933.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "debloater": {
+    "url": "https://github.com/ChrisTitusTech/winutil/releases/tag/26.10.07",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "7zip": {
+    "url": "https://github.com/ip7z/7zip/releases/tag/26.05",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "obs": {
+    "url": "https://github.com/obsproject/obs-studio/releases/tag/33.0.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "vlc": {
+    "url": "https://www.videolan.org/vlc/",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "sharex": {
+    "url": "https://github.com/ShareX/ShareX/releases/tag/v21.0.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "localsend": {
+    "url": "https://github.com/localsend/localsend/releases/tag/v1.18.2",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "keepassxc": {
+    "url": "https://github.com/keepassxreboot/keepassxc/releases/tag/2.8.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "vscodium": {
+    "url": "https://github.com/VSCodium/vscodium/releases/tag/1.143.17183",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "ventoy": {
+    "url": "https://github.com/ventoy/Ventoy/releases/tag/v1.1.18",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "etcher": {
+    "url": "https://github.com/balena-io/etcher/releases/tag/v2.1.9",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "bcuninstaller": {
+    "url": "https://github.com/Klocman/Bulk-Crap-Uninstaller/releases/tag/v6.3",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "hardwaremonitor": {
+    "url": "https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/releases/tag/v0.9.6",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "sophia": {
+    "url": "https://github.com/farag2/Sophia-Script-for-Windows/releases/tag/8.0.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "win11debloat": {
+    "url": "https://github.com/Raphire/Win11Debloat/releases/tag/2026.08.24",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "powershell": {
+    "url": "https://github.com/PowerShell/PowerShell/releases/tag/v7.6.9",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "scriptanalyzer": {
+    "url": "https://github.com/PowerShell/PSScriptAnalyzer/releases/tag/1.25.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "vite": {
+    "url": "https://github.com/vitejs/vite/releases/tag/v8.3.5",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "astro": {
+    "url": "https://github.com/withastro/astro/releases/tag/astro@7.4.2",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "bruno": {
+    "url": "https://github.com/usebruno/bruno/releases/tag/v4.3.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "hoppscotch": {
+    "url": "https://github.com/hoppscotch/hoppscotch/releases/tag/2026.9.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "godot": {
+    "url": "https://github.com/godotengine/godot/releases/tag/4.7.2-stable",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "blender": {
+    "url": "https://download.blender.org/release/Blender5.2/",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "audacity": {
+    "url": "https://github.com/audacity/audacity/releases/tag/Audacity-4.0.1",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "shotcut": {
+    "url": "https://github.com/mltframework/shotcut/releases/tag/v26.9.27",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "drawio": {
+    "url": "https://github.com/jgraph/drawio-desktop/releases/tag/v32.6.1",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "terminal": {
+    "url": "https://github.com/microsoft/terminal/releases/tag/v1.25.2733.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "starship": {
+    "url": "https://github.com/starship/starship/releases/tag/v1.27.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "ohmyposh": {
+    "url": "https://github.com/JanDeDobbeleer/oh-my-posh/releases/tag/v31.9.1",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "windhawk": {
+    "url": "https://github.com/ramensoftware/windhawk/releases/tag/v1.7.3",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "wezterm": {
+    "url": "https://github.com/wezterm/wezterm/releases/tag/20240203-110809-5046fc22",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "photocraft": {
+    "url": "https://github.com/storytold/photocraft/releases/tag/v0.7.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "pdfcraft": {
+    "url": "https://github.com/storytold/pdfcraft/releases/tag/v0.6.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "figcraft": {
+    "url": "https://github.com/storytold/figcraft/releases/tag/v0.5.1",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "vectorcraft": {
+    "url": "https://github.com/storytold/vectorcraft/releases/tag/v0.9.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  },
+  "filmcraft": {
+    "url": "https://github.com/storytold/filmcraft/releases/tag/v0.6.0",
+    "checkedAt": "2026-10-29",
+    "status": 200
+  }
+}

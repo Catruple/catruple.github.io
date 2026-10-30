@@ -33,12 +33,16 @@ const { class: className } = Astro.props;
 
         input.addEventListener('input', () => {
             setQuery(input.value);
-            if (normalizeQuery(input.value) && target) {
+            if (normalizeQuery(input.value) && target && !window.matchMedia('(max-width: 700px)').matches) {
                 document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
             }
         });
 
         input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && target) {
+                input.blur();
+                document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+            }
             if (e.key === 'Escape') {
                 setQuery('');
                 input.blur();
@@ -62,12 +66,13 @@ const { class: className } = Astro.props;
 <style>
     .search {
         display: flex; align-items: center; gap: .5rem; width: 230px; padding: .15rem .6rem;
-        background: #fff; border: 3px solid var(--ink);
+        background: var(--paper); border: 3px solid var(--ink);
     }
     .search input {
         width: 100%; border: 0; outline: 0; background: transparent;
         font-family: var(--px); font-size: .9rem; color: var(--ink);
     }
-    .search input::placeholder { color: #77735f; }
+    @media(max-width:700px) { .search { min-height: 44px; } .search input { min-width: 0; font-size: 1rem; } }
+    .search input::placeholder { color: var(--ink); opacity: .65; }
     .search:focus-within { box-shadow: 3px 3px 0 var(--ink); }
 </style>
