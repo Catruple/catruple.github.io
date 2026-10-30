@@ -16,7 +16,7 @@ const { title = SITE.title, description = SITE.description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang={SITE.lang} data-theme={DEFAULT_THEME.id}>
+<html lang={SITE.lang} data-theme={DEFAULT_THEME.id} data-mode="light">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,7 +29,8 @@ const { title = SITE.title, description = SITE.description } = Astro.props;
         <script is:inline define:vars={{ storageKey: THEME_STORAGE_KEY }}>
             try {
                 var mode = localStorage.getItem('catruple-mode');
-                document.documentElement.dataset.mode = mode ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                // Claro por defecto; solo se usa oscuro si el visitante lo eligió.
+                document.documentElement.dataset.mode = mode === 'dark' ? 'dark' : 'light';
                 var saved = localStorage.getItem(storageKey);
                 if (saved) document.documentElement.setAttribute('data-theme', saved);
             } catch (e) {}
