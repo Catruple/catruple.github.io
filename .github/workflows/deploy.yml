@@ -1,10 +1,9 @@
 # Compila el sitio con Astro y lo publica en GitHub Pages.
 # Requiere: Settings → Pages → Source = "GitHub Actions".
+# Solo se ejecuta a mano: Actions → "Deploy to GitHub Pages" → Run workflow.
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:

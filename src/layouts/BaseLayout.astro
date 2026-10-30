@@ -25,14 +25,15 @@ const { title = SITE.title, description = SITE.description } = Astro.props;
         <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
         <title>{title}</title>
 
-        <!-- Aplica el color guardado antes de pintar, para evitar un parpadeo. -->
+        <!-- Aplica el modo guardado antes de pintar, para evitar un parpadeo. -->
         <script is:inline define:vars={{ storageKey: THEME_STORAGE_KEY }}>
             try {
                 var mode = localStorage.getItem('catruple-mode');
                 // Claro por defecto; solo se usa oscuro si el visitante lo eligió.
                 document.documentElement.dataset.mode = mode === 'dark' ? 'dark' : 'light';
-                var saved = localStorage.getItem(storageKey);
-                if (saved) document.documentElement.setAttribute('data-theme', saved);
+                // El color de Pantalla siempre arranca en azul; se borra el que
+                // guardaban versiones anteriores para que no se quede pegado.
+                localStorage.removeItem(storageKey);
             } catch (e) {}
         </script>
         <Fragment set:html={`<style>${themeCss()}</style>`} />

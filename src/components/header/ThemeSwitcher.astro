@@ -27,7 +27,6 @@ import { DEFAULT_THEME, THEMES } from '@/data/themes';
 
 <script>
     import { DEFAULT_THEME, THEMES } from '@/data/themes';
-    import { THEME_STORAGE_KEY } from '@/config/site';
 
     const root = document.querySelector<HTMLElement>('[data-theme-switcher]');
     const toggleBtn = root?.querySelector<HTMLButtonElement>('[data-theme-toggle]');
@@ -37,16 +36,12 @@ import { DEFAULT_THEME, THEMES } from '@/data/themes';
     if (toggleBtn && menu && swatch) {
         const options = [...menu.querySelectorAll<HTMLButtonElement>('[data-theme-option]')];
 
-        const applyTheme = (id: string, save: boolean) => {
+        // El color dura solo mientras la página está abierta; al recargar vuelve al azul.
+        const applyTheme = (id: string) => {
             const theme = THEMES.find((t) => t.id === id) ?? DEFAULT_THEME;
             document.documentElement.dataset.theme = theme.id;
             swatch.style.setProperty('--s', theme.bg);
             options.forEach((o) => o.setAttribute('aria-checked', String(o.dataset.themeOption === theme.id)));
-            if (save) {
-                try {
-                    localStorage.setItem(THEME_STORAGE_KEY, theme.id);
-                } catch {}
-            }
         };
 
         const setOpen = (open: boolean) => {
@@ -61,7 +56,7 @@ import { DEFAULT_THEME, THEMES } from '@/data/themes';
         menu.addEventListener('click', (e) => {
             const option = (e.target as Element).closest<HTMLElement>('[data-theme-option]');
             if (!option) return;
-            applyTheme(option.dataset.themeOption!, true);
+            applyTheme(option.dataset.themeOption!);
             setOpen(false);
         });
         document.addEventListener('click', () => setOpen(false));
@@ -69,7 +64,7 @@ import { DEFAULT_THEME, THEMES } from '@/data/themes';
             if (e.key === 'Escape') setOpen(false);
         });
 
-        applyTheme(document.documentElement.dataset.theme ?? DEFAULT_THEME.id, false);
+        applyTheme(DEFAULT_THEME.id);
     }
 </script>
 
