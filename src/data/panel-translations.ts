@@ -7,4 +7,5 @@ export const panelTranslations: Record<string, string> = {
   'Edita vídeo con pistas, transiciones y ajustes de color.': 'Edit video with tracks, transitions and color adjustments.',
   'Dibuja ilustraciones con curvas, formas y efectos editables.': 'Draw illustrations with curves, shapes and editable effects.',
   'Diseña interfaces con componentes y prototipos.': 'Design interfaces with components and prototypes.',
+  'Te explica ejercicios de geometría paso a paso.': 'Explains geometry exercises step by step.',
 };

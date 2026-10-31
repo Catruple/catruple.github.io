@@ -42,7 +42,11 @@ export const catalogText: Record<string, string> = {
   "Personaliza Windows con Windhawk": "Customize Windows with Windhawk",
   "Aplica modificaciones concretas a la barra de tareas y a otras partes de Windows.": "Apply targeted modifications to the taskbar and other parts of Windows.",
   "Terminal WezTerm": "WezTerm terminal",
-  "Trabaja con pestañas y paneles en una terminal configurable mediante Lua.": "Work with tabs and panes in a terminal configured through Lua."
+  "Trabaja con pestañas y paneles en una terminal configurable mediante Lua.": "Work with tabs and panes in a terminal configured through Lua.",
+  "TutorGebra · Tutor de geometría": "TutorGebra · Geometry tutor",
+  "Le pasas un problema en texto o en imagen y lo resuelve mientras te lo explica paso a paso, en un tablero de GeoGebra y con voz.": "Give it a problem as text or an image and it solves it while explaining each step, on a GeoGebra board and out loud.",
+  "Probar": "Try it",
+  "Autor:": "Author:"
 };
 export const catalogGuides: Record<string, [string, string]> = {
   "ventoy": [
@@ -132,5 +136,9 @@ export const catalogGuides: Record<string, [string, string]> = {
   "wezterm": [
     "WezTerm terminal",
     "<h2>Get started</h2><ol><li>Install WezTerm from Releases or the official method for your OS.</li><li>Open the terminal and check that it detects your preferred shell.</li><li>Create wezterm.lua at the location documented for your system.</li><li>Configure fonts, colors and shortcuts using official examples. Keep a backup before replacing your configuration.</li></ol><p><a href=\"https://github.com/wezterm/wezterm\">Official repository and instructions</a> · <a href=\"https://github.com/wezterm/wezterm/releases\">Project releases</a></p>"
+  ],
+  "tutorgebra": [
+    "TutorGebra · Geometry tutor",
+    "<h2>Prepare the exercise</h2><ol><li>Open TutorGebra with the Try it button. No sign-up needed: leave the OpenRouter key field empty to use the server’s free key.</li><li>Type the exercise in your own words under <strong>What do you want to calculate or draw?</strong>, or click <strong>Attach image (optional)</strong> and upload a photo of it.</li><li>Choose the teacher’s voice in Spanish or English under <strong>Teacher Voice</strong>. <strong>More Voices (edgeTTS)</strong> offers more options.</li><li>Click <strong>Generate Lesson</strong> and wait while it prepares the lesson.</li></ol><h2>During the lesson</h2><ul><li>Each step is typed as a command, drawn on the GeoGebra board and explained out loud.</li><li>Use <strong>Player Controls</strong> to pause, restart or move to the next step at your own pace.</li><li>The board’s fullscreen button lets you focus on the drawing.</li><li>When it finishes, you can move the board’s points and sliders to explore the figure.</li></ul><h2>Keep in mind</h2><p>This is an experimental project: the AI can make mistakes in a calculation or drawing, so check each step. It is free and open source (MIT license); the code and instructions to install it on your PC are in its <a href=\"https://github.com/ANGELUSD11/tutorgebra\">GitHub repository</a>.</p>"
   ]
 };

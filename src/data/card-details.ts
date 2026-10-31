@@ -128,6 +128,10 @@ export const cardDetails: Record<string, readonly string[]> = {
   "wezterm": [
     "Configuración Lua",
     "Pestañas y paneles"
+  ],
+  "tutorgebra": [
+    "Texto o foto",
+    "Voz en español e inglés"
   ]
 };
 export const detailTranslations: Record<string, string> = {
@@ -226,5 +230,7 @@ export const detailTranslations: Record<string, string> = {
   "Mods de Windows": "Windows mods",
   "Ajustes por mod": "Per-mod settings",
   "Organiza tu trabajo en pestañas y paneles dentro de una terminal multiplataforma, con colores, fuente y atajos configurables mediante Lua.": "Organize work in tabs and panes inside a cross-platform terminal with colors, fonts and shortcuts configured through Lua.",
-  "Configuración Lua": "Lua configuration"
+  "Configuración Lua": "Lua configuration",
+  "Texto o foto": "Text or photo",
+  "Voz en español e inglés": "Spanish & English voice"
 };

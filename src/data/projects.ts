@@ -41,6 +41,8 @@ export interface Project {
   guide?: string;
   /** Muestra el sello "WIP". */
   wip?: boolean;
+  /** Autor del proyecto: usuario de GitHub, enlazado a su perfil. */
+  author?: string;
 }
 
 export const PROJECTS = [
@@ -498,6 +500,19 @@ export const PROJECTS = [
   "cta": "Descargar",
   "url": "https://github.com/storytold/filmcraft/releases/tag/v0.6.0",
   "guide": "filmcraft"
+},
+  {
+  "id": "tutorgebra",
+  "category": "labs",
+  "windowTitle": "TutorGebra.app",
+  "icon": "tutorgebra",
+  "title": "TutorGebra · Tutor de geometría",
+  "description": "Le pasas un problema en texto o en imagen y lo resuelve mientras te lo explica paso a paso, en un tablero de GeoGebra y con voz.",
+  "meta": "Web · Experimental",
+  "cta": "Probar",
+  "url": "https://tutorgebra-production.up.railway.app/",
+  "guide": "tutorgebra",
+  "author": "ANGELUSD11"
 },
 ] as const satisfies readonly Project[];
 

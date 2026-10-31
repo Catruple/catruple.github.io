@@ -29,6 +29,7 @@ const { project, initialHidden = false } = Astro.props;
                 {(cardDetails[project.id] ?? []).map(detail => <li>{detail}</li>)}
             </ul>
             {project.wip && <span class="stamp">WIP</span>}
+            {project.author && <small class="author">Autor: <a href={`https://github.com/${project.author}`} target="_blank" rel="noopener">{project.author}</a></small>}
             {(() => {
                 const check = linkChecks[project.id as keyof typeof linkChecks];
                 return check?.url === project.url && 'checkedAt' in check ? <small class="checked"><span>Enlace comprobado</span> · <time datetime={check.checkedAt}>{check.checkedAt.split('-').reverse().join('/')}</time></small> : null;
@@ -147,6 +148,9 @@ const { project, initialHidden = false } = Astro.props;
     .card:hover .details li { background: rgb(255 255 255 / .06); }
 
     .checked { display: block; margin: auto 0 .65rem; font: .95rem/1.4 var(--description); }
+    .author { display: block; margin: auto 0 .65rem; font: .95rem/1.4 var(--description); }
+    .author + .checked { margin-top: 0; }
+    .author a { color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
     .foot {
         display: flex; justify-content: space-between; align-items: center; gap: .6rem;
         margin-top: 0; padding: .8rem 0 1rem; border-top: 3px dashed currentColor;
