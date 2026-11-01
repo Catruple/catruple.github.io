@@ -510,7 +510,7 @@ export const PROJECTS = [
   "description": "Le pasas un problema en texto o en imagen y lo resuelve mientras te lo explica paso a paso, en un tablero de GeoGebra y con voz.",
   "meta": "Web · Experimental",
   "cta": "Probar",
-  "url": "https://tutorgebra-production.up.railway.app/",
+  "url": "https://tutorgebra.com/",
   "guide": "tutorgebra",
   "author": "ANGELUSD11"
 },
