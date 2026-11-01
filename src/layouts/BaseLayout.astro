@@ -2,7 +2,7 @@
 /** Documento HTML: <head>, fuentes, estilos globales y tema guardado. */
 import '@/styles/global.css';
 import '@/styles/fonts.css';
-import { SITE, THEME_STORAGE_KEY } from '@/config/site';
+import { SITE, THEME_STORAGE_KEY, CLOUDFLARE_ANALYTICS_TOKEN } from '@/config/site';
 import { DEFAULT_THEME } from '@/data/themes';
 import { themeCss } from '@/lib/theme-css';
 import { withBase } from '@/lib/paths';
@@ -28,6 +28,9 @@ const {
 // Las redes sociales necesitan URLs absolutas.
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 const imageUrl = new URL(withBase(image), Astro.site).href;
+
+// Analítica sin cookies; solo en la web publicada para no contar visitas locales.
+const analyticsToken = import.meta.env.PROD ? CLOUDFLARE_ANALYTICS_TOKEN : '';
 ---
 
 <!doctype html>
@@ -75,7 +78,14 @@ const imageUrl = new URL(withBase(image), Astro.site).href;
         </script>
         <Fragment set:html={`<style>${themeCss()}</style>`} />
 
-
+        {analyticsToken && (
+            <script
+                is:inline
+                type="module"
+                src="https://static.cloudflareinsights.com/beacon.min.js"
+                data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+            ></script>
+        )}
     </head>
     <body>
         <slot />

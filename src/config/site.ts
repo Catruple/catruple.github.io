@@ -12,6 +12,13 @@ export const SITE = {
   repo: 'https://github.com/Catruple/Catruple',
 } as const;
 
+/**
+ * Token de Cloudflare Web Analytics (cuenta de Cloudflare → Analytics & Logs →
+ * Web Analytics → Add a site → catruple.com). No es secreto: va visible en el HTML.
+ * Vacío = no se carga el script de analítica.
+ */
+export const CLOUDFLARE_ANALYTICS_TOKEN = '850d35781478498a8ecf1df36da0dd70';
+
 /** Clave de localStorage donde se guarda el color de pantalla elegido. */
 export const THEME_STORAGE_KEY = 'catruple-theme';
 
