@@ -1,9 +1,10 @@
 /** Datos generales del sitio. */
 export const SITE = {
   name: 'Catruple.com',
-  title: 'Catruple.com',
+  title: 'Catruple — Software gratis y de código abierto',
   description:
-    'A la mierda sus suscripciones. Catruple reúne herramientas gratis y de código abierto para tu PC, con guías y enlaces oficiales.',
+    'Descubre en Catruple herramientas gratis y de código abierto para tu PC, con guías de uso y enlaces oficiales. Buen software, cero suscripciones.',
+  intro: 'A la mierda sus suscripciones. Catruple reúne herramientas gratis y de código abierto para tu PC, con guías y enlaces oficiales.',
   lang: 'es',
   locale: 'es-CO',
   author: 'Odruu',

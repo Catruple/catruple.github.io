@@ -29,6 +29,20 @@ const {
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
 const imageUrl = new URL(withBase(image), Astro.site).href;
 
+const brandData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', '@id': 'https://catruple.com/#website',
+      url: 'https://catruple.com/', name: 'Catruple', alternateName: 'Catruple.com',
+      description: SITE.description, inLanguage: SITE.lang,
+      publisher: { '@id': 'https://catruple.com/#organization' } },
+    { '@type': 'Organization', '@id': 'https://catruple.com/#organization',
+      name: 'Catruple', url: 'https://catruple.com/',
+      logo: 'https://catruple.com/apple-touch-icon.png',
+      sameAs: ['https://github.com/Catruple'] },
+  ],
+};
+
 // Analítica sin cookies; solo en la web publicada para no contar visitas locales.
 const analyticsToken = import.meta.env.PROD ? CLOUDFLARE_ANALYTICS_TOKEN : '';
 ---
@@ -44,6 +58,7 @@ const analyticsToken = import.meta.env.PROD ? CLOUDFLARE_ANALYTICS_TOKEN : '';
         <link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} />
         {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={pageUrl} />}
         <title>{title}</title>
+        {!noindex && Astro.url.pathname === '/' && <script type="application/ld+json" is:inline set:html={JSON.stringify(brandData).replace(/</g, '\\u003c')} />}
 
         <!-- Vista previa al compartir el enlace (Discord, WhatsApp, X, Telegram…). -->
         <!-- Discord usa theme-color para la franja lateral del embed. -->
