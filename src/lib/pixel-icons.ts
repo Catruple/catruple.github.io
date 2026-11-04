@@ -41,6 +41,7 @@ export const ICONS = {
   'vectorcraft': ['XX', 'XX'],
   'filmcraft': ['XX', 'XX'],
   'tutorgebra': ['XX', 'XX'],
+  'krita': ['XX', 'XX'],
   // Logo del sitio; el dibujo a color está en assets/pixel-logos/catruple.svg.
   'catruple': ['XX', 'XX'],
   cat: ['XX......XX', 'XXX....XXX', 'XXXXXXXXXX', 'XXXXXXXXXX', 'XX.XXXX.XX', 'XXXXXXXXXX', 'XXXX..XXXX', '.XXXXXXXX.', '..XXXXXX..'],

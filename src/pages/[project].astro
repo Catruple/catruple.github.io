@@ -1,0 +1,34 @@
+---
+/**
+ * Enlace directo a cada proyecto: catruple.com/<id> (p. ej. /godot).
+ * Muestra el catálogo completo, lleva la vista a la tarjeta y la hace parpadear.
+ * Título y descripción son los del proyecto, para la vista previa al compartir.
+ */
+import SiteLayout from '@/layouts/SiteLayout.astro';
+import Hero from '@/components/hero/Hero.astro';
+import CatalogSection from '@/components/catalog/CatalogSection.astro';
+import { SITE } from '@/config/site';
+import { PROJECT_LIST, cardDomId, type Project } from '@/data/projects';
+
+export function getStaticPaths() {
+  return PROJECT_LIST.map(project => ({ params: { project: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: Project };
+---
+
+<SiteLayout title={`${project.title} · ${SITE.name}`} description={project.description}>
+    <Hero />
+    <CatalogSection />
+    <div data-focus-card={cardDomId(project.id)} hidden></div>
+</SiteLayout>
+
+<script>
+    import { highlightCard } from '@/scripts/highlight-card';
+
+    const id = document.querySelector<HTMLElement>('[data-focus-card]')?.dataset.focusCard;
+    // Espera a que carguen fuentes e imágenes para que el scroll no se desplace.
+    const focus = () => id && highlightCard(id);
+    if (document.readyState === 'complete') focus();
+    else window.addEventListener('load', focus, { once: true });
+</script>

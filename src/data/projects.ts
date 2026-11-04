@@ -514,6 +514,18 @@ export const PROJECTS = [
   "guide": "tutorgebra",
   "author": "ANGELUSD11"
 },
+  {
+  "id": "krita",
+  "category": "labs",
+  "windowTitle": "krita.exe",
+  "icon": "krita",
+  "title": "Ilustración con Krita",
+  "description": "Dibuja y pinta ilustraciones, cómics y texturas con pinceles personalizables, capas y estabilizador de trazo, pensado para usar con tableta gráfica.",
+  "meta": "v5.3.4.1",
+  "cta": "Descargar",
+  "url": "https://download.kde.org/stable/krita/5.3.4.1/",
+  "guide": "krita"
+},
 ] as const satisfies readonly Project[];
 
 export type ProjectId = (typeof PROJECTS)[number]['id'];

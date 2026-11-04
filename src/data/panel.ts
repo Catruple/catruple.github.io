@@ -19,7 +19,7 @@ export interface PanelTab {
 const row = (id: ProjectId, description: string): PanelRow => {
   const project = PROJECT_LIST.find(project => project.id === id);
   if (!project) throw new Error(`Unknown panel project: ${id}`);
-  const shortTitles: Partial<Record<ProjectId, string>> = { filmcraft: 'FilmCraft', vectorcraft: 'VectorCraft', figcraft: 'FigCraft', localsend: 'LocalSend', godot: 'Godot', tutorgebra: 'TutorGebra' };
+  const shortTitles: Partial<Record<ProjectId, string>> = { filmcraft: 'FilmCraft', vectorcraft: 'VectorCraft', figcraft: 'FigCraft', localsend: 'LocalSend', godot: 'Godot', tutorgebra: 'TutorGebra', krita: 'Krita' };
   return { icon: project.icon, title: shortTitles[id] ?? project.title, meta: project.meta, project: id, description };
 };
 
@@ -52,9 +52,9 @@ export const PANEL_TABS: PanelTab[] = [
     id: 'nuevos', label: 'Nuevos',
     // Newest additions to Catruple first, not newest upstream software releases.
     rows: [
+      row('krita', 'Pinta ilustraciones y cómics con pinceles y capas.'),
       row('tutorgebra', 'Te explica ejercicios de geometría paso a paso.'),
       row('filmcraft', 'Edita vídeo con pistas, transiciones y ajustes de color.'),
-      row('vectorcraft', 'Dibuja ilustraciones con curvas, formas y efectos editables.'),
     ],
   },
 ];

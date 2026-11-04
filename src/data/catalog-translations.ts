@@ -46,7 +46,8 @@ export const catalogText: Record<string, string> = {
   "TutorGebra · Tutor de geometría": "TutorGebra · Geometry tutor",
   "Le pasas un problema en texto o en imagen y lo resuelve mientras te lo explica paso a paso, en un tablero de GeoGebra y con voz.": "Give it a problem as text or an image and it solves it while explaining each step, on a GeoGebra board and out loud.",
   "Probar": "Try it",
-  "Autor:": "Author:"
+  "Autor:": "Author:",
+  "Ilustración con Krita": "Illustration with Krita"
 };
 export const catalogGuides: Record<string, [string, string]> = {
   "ventoy": [
@@ -140,5 +141,9 @@ export const catalogGuides: Record<string, [string, string]> = {
   "tutorgebra": [
     "TutorGebra · Geometry tutor",
     "<h2>Prepare the exercise</h2><ol><li>Open TutorGebra with the Try it button. No sign-up needed: leave the OpenRouter key field empty to use the server’s free key.</li><li>Type the exercise in your own words under <strong>What do you want to calculate or draw?</strong>, or click <strong>Attach image (optional)</strong> and upload a photo of it.</li><li>Choose the teacher’s voice in Spanish or English under <strong>Teacher Voice</strong>. <strong>More Voices (edgeTTS)</strong> offers more options.</li><li>Click <strong>Generate Lesson</strong> and wait while it prepares the lesson.</li></ol><h2>During the lesson</h2><ul><li>Each step is typed as a command, drawn on the GeoGebra board and explained out loud.</li><li>Use <strong>Player Controls</strong> to pause, restart or move to the next step at your own pace.</li><li>The board’s fullscreen button lets you focus on the drawing.</li><li>When it finishes, you can move the board’s points and sliders to explore the figure.</li></ul><h2>Keep in mind</h2><p>This is an experimental project: the AI can make mistakes in a calculation or drawing, so check each step. It is free and open source (MIT license); the code and instructions to install it on your PC are in its <a href=\"https://github.com/ANGELUSD11/tutorgebra\">GitHub repository</a>.</p>"
+  ],
+  "krita": [
+    "Illustration with Krita",
+    "<h2>Get started</h2><ol><li>Download the installer for your system from the official downloads page; the repository contains its source code.</li><li>Open Krita and create a canvas with <strong>File → New</strong>, choosing its size and resolution.</li><li>If you use a drawing tablet, make a few test strokes to check that pen pressure is detected.</li><li>Pick a brush from the presets panel and work in layers so you can fix each part separately.</li><li>Save as .kra to keep your layers and export to PNG or JPG when you are done.</li></ol><p><a href=\"https://invent.kde.org/graphics/krita\">Official repository (KDE)</a> · <a href=\"https://github.com/KDE/krita\">GitHub mirror</a> · <a href=\"https://krita.org/en/download/\">Official downloads</a></p>"
   ]
 };

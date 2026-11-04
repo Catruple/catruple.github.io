@@ -89,11 +89,18 @@ export function initLanguage() {
     const translated = detailTranslations[trimmed] ?? translations[trimmed];
     return translated ? value.replace(trimmed, translated) : value;
   };
+  // Título de la página en el HTML: "Catruple.com" o "<proyecto> · Catruple.com" en /<id>.
+  const originalTitle = document.title;
+  const englishTitle = () => {
+    const suffix = ' · Catruple.com';
+    if (!originalTitle.endsWith(suffix)) return 'Catruple.com — Free tools for your PC';
+    return translate(originalTitle.slice(0, -suffix.length)) + suffix;
+  };
   const apply = () => {
     applying = true;
     observer.disconnect();
     document.documentElement.lang = english ? 'en' : 'es';
-    document.title = english ? 'Catruple.com — Free tools for your PC' : 'Catruple.com';
+    document.title = english ? englishTitle() : originalTitle;
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     const nodes: Text[] = [];
     while (walker.nextNode()) nodes.push(walker.currentNode as Text);

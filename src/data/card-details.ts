@@ -132,6 +132,10 @@ export const cardDetails: Record<string, readonly string[]> = {
   "tutorgebra": [
     "Texto o foto",
     "Voz en español e inglés"
+  ],
+  "krita": [
+    "Pinceles personalizables",
+    "Capas y animación"
   ]
 };
 export const detailTranslations: Record<string, string> = {
@@ -232,5 +236,8 @@ export const detailTranslations: Record<string, string> = {
   "Organiza tu trabajo en pestañas y paneles dentro de una terminal multiplataforma, con colores, fuente y atajos configurables mediante Lua.": "Organize work in tabs and panes inside a cross-platform terminal with colors, fonts and shortcuts configured through Lua.",
   "Configuración Lua": "Lua configuration",
   "Texto o foto": "Text or photo",
-  "Voz en español e inglés": "Spanish & English voice"
+  "Voz en español e inglés": "Spanish & English voice",
+  "Dibuja y pinta ilustraciones, cómics y texturas con pinceles personalizables, capas y estabilizador de trazo, pensado para usar con tableta gráfica.": "Draw and paint illustrations, comics and textures with customizable brushes, layers and stroke stabilization, built for drawing tablets.",
+  "Pinceles personalizables": "Customizable brushes",
+  "Capas y animación": "Layers & animation"
 };
