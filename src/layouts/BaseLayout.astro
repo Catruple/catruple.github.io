@@ -55,6 +55,7 @@ const analyticsToken = import.meta.env.PROD ? CLOUDFLARE_ANALYTICS_TOKEN : '';
         <meta name="description" content={description} />
         <meta name="generator" content={Astro.generator} />
         <link rel="icon" href={withBase('favicon.ico')} sizes="16x16 32x32 48x48" />
+        <link rel="icon" type="image/png" sizes="180x180" href={withBase('apple-touch-icon.png')} />
         <link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} />
         {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={pageUrl} />}
         <title>{title}</title>

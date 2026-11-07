@@ -24,7 +24,7 @@ const { Content } = await render(entry);
 ---
 
 <Modal id={guideDomId(project.id)} title={entry.data.windowTitle ?? 'Ayuda'} width={640}>
-    <div class="body">
+    <div class="body" data-nosnippet>
         <h2 class="heading">{entry.data.title ?? `Cómo usar · ${project.title}`}</h2>
         <Prose><Content /></Prose>
     </div>
